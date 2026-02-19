@@ -1,64 +1,31 @@
 ---
-title: My Prototyping Site
-description: First steps—looks decent, works fast
+title: Monkey Magic
+description: Unleash the power of monkeys
 ---
 
-# Welcome to My Site
+<div class="bg-gradient-to-b from-amber-900 to-black text-white min-h-screen">
+  <section class="py-32 text-center">
+    <h1 class="text-5xl font-bold mb-4">Monkey Magic</h1>
+    <p class="text-xl opacity-80">Smarter, Faster, Funnier. Powered by Primate AI.</p>
+  </section>
 
-Built with Markdown. No servers, no fuss.
+  <section class="max-w-6xl mx-auto px-6 py-16">
+    <h2 class="text-3xl font-semibold text-center mb-12">Our Monkey Squad</h2>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-amber-800 p-8 rounded-xl hover:bg-amber-700 transition cursor-pointer">
+        <h3 class="text-2xl font-bold mb-4">Baboon</h3>
+        <p>Master of strategy—leads the pack, never backs down.</p>
+      </div>
+      <div class="bg-amber-800 p-8 rounded-xl hover:bg-amber-700 transition cursor-pointer">
+        <h3 class="text-2xl font-bold mb-4">Chimpanzee</h3>
+        <p>Tool-using genius—solves problems before you ask.</p>
+      </div>
+      <div class="bg-amber-800 p-8 rounded-xl hover:bg-amber-700 transition cursor-pointer">
+        <h3 class="text-2xl font-bold mb-4">Capuchin</h3>
+        <p>Agile acrobat—handles chaos like it's a game.</p>
+      </div>
+    </div>
+  </section>
+</div>
 
-## What's Here
-- Learning code on a Mac Mini  
-- Dark mode toggle (click below)  
-- Random image because why not  
-
-! (https://picsum.photos/1200/600?random)  
-
-### Quick Links
-- (/about.md)  
-- (/projects.md)  
-
-<button id="theme-toggle" class="px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-700">
-  Switch to Dark Mode
-</button>
-
-<script>
-  const toggle = document.getElementById('theme-toggle');
-  const body = document.body;
-
-  // Load saved preference
-  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    body.classList.add('dark');
-    toggle.textContent = 'Switch to Light Mode';
-  }
-
-  toggle.addEventListener('click', () => {
-    if (body.classList.contains('dark')) {
-      body.classList.remove('dark');
-      localStorage.theme = 'light';
-      toggle.textContent = 'Switch to Dark Mode';
-    } else {
-      body.classList.add('dark');
-      localStorage.theme = 'dark';
-      toggle.textContent = 'Switch to Light Mode';
-    }
-  });
-</script>
-
-<style>
-  body.dark {
-    background: #111827;
-    color: #e5e7eb;
-  }
-  body.dark h1, body.dark h2 {
-    color: #a5b4fc;
-  }
-  body.dark a {
-    color: #818cf8;
-  }
-  body.dark button {
-    background: #374151;
-  }
-</style>
-
-<small>Preview with Live Server—push later for GitHub Pages.</small>
+<script src="https://cdn.tailwindcss.com"></script>
