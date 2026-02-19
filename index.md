@@ -1,8 +1,8 @@
 ---
-title: Monkey Magics
+title: Monkey Magic
 ---
 
-<div class="min-h-screen bg-black text-white flex flex-col relative">
+<div class="w-screen h-screen bg-black text-white flex flex-col relative overflow-hidden">
   <!-- Animated bg -->
   <div class="absolute inset-0 bg-gradient-to-b from-blue-950 via-black to-black animate-gradient"></div>
 
@@ -21,7 +21,7 @@ title: Monkey Magics
 
   <!-- Squad section -->
   <section class="relative z-10 max-w-6xl mx-auto px-8 py-20">
-    <h2 class="text-5xl font-bold text-center mb-16 text-gray-200">Our Squad</h2>
+    <h2 class="text-5xl font-bold text-center mb-16 text-gray-200">Our Monkey Squad</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
       <div class="bg-gray-800/60 backdrop-blur-lg p-10 rounded-2xl border border-gray-700 hover:border-blue-500 hover:shadow-2xl transition-all duration-500">
         <h3 class="text-4xl font-bold mb-6 text-white">Baboon</h3>
@@ -33,6 +33,13 @@ title: Monkey Magics
 </div>
 
 <style>
+  body,html {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+  }
   @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
