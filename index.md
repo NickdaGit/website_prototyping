@@ -1,3 +1,6 @@
+---
+layout: none
+---
 <div class="hero">
   <video autoplay loop muted playsinline>
     <source src="hero1.mp4" type="video/mp4">
