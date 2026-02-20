@@ -6,7 +6,7 @@ layout: none
 
 <div style="position: absolute; top: 20px; left: 15px; z-index: 10;">
   <img 
-    src="assets/MM_LOGO3.png" 
+    src="assets/MM_LOGO5.PNG" 
     alt="Monkey Magic Logo" 
     class="logo" 
     style="height: auto; background: transparent;"

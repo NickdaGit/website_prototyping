@@ -4,7 +4,7 @@ layout: none
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 
-<div style="position: absolute; top: 15px; left: 15px; z-index: 10;">
+<div style="position: absolute; top: 15px; left: 10px; z-index: 10;">
   <img 
   src="assets/MM_LOGO5.PNG" 
   alt="Monkey Magic Logo" 
