@@ -1,0 +1,4 @@
+theme: jekyll-theme-minimal  # or whatever you're using—check Settings > Pages
+title: ""  # blank = no title banner
+description: ""  # blank = no description block
+show_downloads: false  # hides any extra buttons
