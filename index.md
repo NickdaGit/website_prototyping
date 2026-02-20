@@ -4,8 +4,13 @@ layout: none
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 
-<div style="position: absolute; top: 20px; left: 30px; z-index: 10;">
-  <img src="assets/MM_LOGO5.PNG" alt="Monkey Magic Logo" style="width: 180px; height: auto; background: transparent;" />
+<div style="position: absolute; top: 15px; left: 15px; z-index: 10;">
+  <img 
+  src="assets/MM_LOGO5.PNG" 
+  alt="Monkey Magic Logo" 
+  class="logo"
+  style="width: 180px; height: auto; background: transparent;" 
+  />
 </div>
 
 <div class="hero">
@@ -163,6 +168,19 @@ layout: none
     font-family: 'Inter', sans-serif !important;
     font-weight: 700;
   }
+
+.logo {
+  width: 12vw;
+  max-width: 180px;
+  min-width: 100px;
+}
+@media (max-width: 768px) {
+  .logo {
+    width: 20vw;
+    min-width: 110px;
+  }
+}
+
 </style>
 
 <div class="layout">
