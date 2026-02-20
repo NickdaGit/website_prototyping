@@ -34,11 +34,11 @@ layout: none
       <h4>Datasets</h4>
       <p>Raw fuel for the brain</p>
     </a>
-    <a href="training.md" class="bar-item">
+    <a href="/training" class="bar-item">
       <h4>Training 101</h4>
       <p>How monkeys learn tricks</p>
     </a>
-    <a href="/local.md" class="bar-item">
+    <a href="/local.html" class="bar-item">
       <h4>Run Locally</h4>
       <p>No cloud, no problem</p>
     </a>

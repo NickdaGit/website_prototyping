@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Run Locally | MonkeyMagic.ai</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9f9f9;
+      color: #222;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+    .logo {
+      width: 12vw;
+      max-width: 180px;
+      min-width: 100px;
+      height: auto;
+      background: transparent;
+    }
+    @media (max-width: 768px) {
+      .logo {
+        width: 20vw;
+        min-width: 110px;
+      }
+    }
+    .hero {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+    h1 {
+      font-size: 3.5rem;
+      margin: 0;
+    }
+    h2 {
+      color: #0066cc;
+      font-size: 2.5rem;
+      margin: 3rem 0 1rem;
+    }
+    .content {
+      max-width: 900px;
+      margin: 4rem auto;
+      padding: 0 2rem;
+    }
+    p, li {
+      font-size: 1.3rem;
+      max-width: 800px;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    code {
+      background: #eee;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+    pre {
+      background: #222;
+      color: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div style="position: absolute; top: 30px; left: 15px; z-index: 10;">
+    <img src="assets/logo5.png" alt="Monkey Magic Logo" class="logo" style="height: auto; background: transparent;">
+  </div>
+
+  <div class="hero">
+    <h1>Run Locally</h1>
+    <p>No cloud, no fees—just you, your machine, and a monkey brain</p>
+  </div>
+
+  <section class="content">
+    <h2>Why Run Locally?</h2>
+    <p>Privacy (no one sees your prompts), speed (no internet lag), and free—once you download the weights.</p>
+
+    <h2>Tools You Need</h2>
+    <ul>
+      <li><strong>Ollama</strong>: Easiest—runs models like Llama or Phi right on your Mac/PC.</li>
+      <li><strong>llama.cpp</strong>: For power users—super fast, works on almost anything.</li>
+      <li><strong>LM Studio</strong>: GUI version—clicky, no terminal.</li>
+    </ul>
+
+    <h2>Quick Start (Ollama way)</h2>
+    <ol>
+      <li>Download Ollama: <a href="https://ollama.com">ollama.com</a></li>
+      <li>Open Terminal: <code>ollama run phi3</code> (or llama3, mistral—whatever fits your RAM)</li>
+      <li>Chat: Type "Tell me a monkey joke" — instant reply.</li>
+    </ol>
+    <p>Pro tip: Start small. Phi-3 mini needs ~4GB RAM. Llama-3 8B? 6–8GB. Anything bigger needs a GPU.</p>
+
+    <h2>From Hugging Face</h2>
+    <p>Go to huggingface.co/models → search "phi3" → click "Use in Ollama" → copy command. Done.</p>
+
+    <p><a href="/index.md">← Back to Home</a></p>
+  </section>
+
+</body>
+</html>
+
