@@ -1,6 +1,9 @@
 ---
 layout: none
 ---
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+
 <div class="hero">
   <video autoplay loop muted playsinline>
     <source src="hero1.mp4" type="video/mp4">
@@ -94,7 +97,15 @@ layout: none
     color: #555;
     font-size: 1.1rem;
   }
-s1
+
+ body, h1, h2, h3, p, .team-card {
+    font-family: 'Inter', sans-serif !important;
+  }
+  h2.team {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 700;
+  }
+
 </style>
 
 
@@ -107,11 +118,8 @@ s1
   <!-- Subtle animated bg -->
   <div class="absolute inset-0 bg-gradient-to-b from-blue-950 via-black to-black animate-gradient"></div>
 
-  <div class="text-center z-10 px-6">
-    <h1 class="text-7xl md:text-9xl font-black tracking-tight mb-6">Monkey Magic</h1>
-    <p class="text-3xl md:text-4xl font-light opacity-80">Site Under Construction</p>
-    <p class="text-xl mt-8 opacity-70">Coming soon—something irrepressible is brewing.</p>
-  </div>
+<div style="text-align: center; margin-top: 4rem; color: #666;">
+  Under construction—something irrepressible is brewing!
 </div>
 
 <!--
