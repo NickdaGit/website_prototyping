@@ -5,7 +5,7 @@ layout: none
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 
 <div style="position: absolute; top: 20px; left: 30px; z-index: 10;">
-  <img src="assets/MM_LOGO3.JPG" alt="Monkey Magic Logo" style="width: 120px; height: auto;" />
+  <img src="assets/MM_LOGO.PNG" alt="Monkey Magic Logo" style="width: 120px; height: auto; background: transparent;" />
 </div>
 
 <div class="hero">
