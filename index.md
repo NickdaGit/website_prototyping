@@ -4,6 +4,13 @@ layout: none
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 
+
+<div style="position: absolute; top: 20px; left: 20px; z-index: 10;">
+  <img src="assets/MM_LOGO.JPG" alt="Monkey Magic Logo" style="width: 80px; height: auto;" />
+</div>
+
+
+
 <div class="hero">
   <video autoplay loop muted playsinline>
     <source src="hero1.mp4" type="video/mp4">
@@ -21,21 +28,19 @@ layout: none
   <div class="grid">
   
     <div class="card">
-      <img src="assets/GUNTHER.JPG" alt="Gunther - Chief Banana Office and Lead Developer">
+      <img src="assets/GUNTHER2.JPG" alt="Gunther - Chief Banana Office and Lead Developer">
       <h3>Gunther</h3>
       <p>Lead Developer. Writes code faster than he eats bananas. Specializes in AI ethics... mostly.</p>
     </div>
     
-    <!-- Monkey 2 -->
     <div class="card">
-      <img src="assets/BOB.JPG" alt="Lila the UX Monkey">
+      <img src="assets/ZARA.JPG" alt="Lila the UX Monkey">
       <h3>Lila</h3>
       <p>Design Queen. Makes interfaces so intuitive even humans can use them. Hates clutter—except banana peels.</p>
     </div>
     
-    <!-- Monkey 3 -->
     <div class="card">
-      <img src="assets/JEANCLAUDE.JPG" alt="Zara the Data Monkey">
+      <img src="assets/LADY.JPG" alt="Zara the Data Monkey">
       <h3>Zara</h3>
       <p>Data Wizard. Sees patterns in chaos. Once predicted the next banana shortage from cloud data.</p>
     </div>
@@ -122,50 +127,6 @@ layout: none
   Under construction—something irrepressible is brewing!
 </div>
 
-<!--
-<div>
-<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-  
-  
-  <ellipse cx="100" cy="110" rx="80" ry="90" fill="#f5d6a3" stroke="#8b5a2b" stroke-width="6"/>
-  
-
-  <ellipse cx="40" cy="80" rx="35" ry="45" fill="#f5d6a3" stroke="#8b5a2b" stroke-width="5"/>
-  <ellipse cx="160" cy="80" rx="35" ry="45" fill="#f5d6a3" stroke="#8b5a2b" stroke-width="5"/>
-  
-  <circle cx="70" cy="90" r="15" fill="white" stroke="black" stroke-width="3"/>
-  <circle cx="130" cy="90" r="15" fill="white" stroke="black" stroke-width="3"/>
-  <circle cx="75" cy="92" r="7" fill="black"/>
-  <circle cx="135" cy="92" r="7" fill="black"/>
-  
-  <ellipse cx="100" cy="130" rx="20" ry="10" fill="#d2691e" stroke="black" stroke-width="3"/>
-  <path d="M80 150 Q100 170 120 150" stroke="#8b5a2b" stroke-width="6" fill="none"/>
-  <path d="M95 140 L100 145 L105 140" stroke="black" stroke-width="3" fill="none"/> 
-  
-  <path d="M50 60 Q40 40 30 60" stroke="#8b5a2b" stroke-width="2" fill="none" opacity="0.6"/>
-  <path d="M150 60 Q160 40 170 60" stroke="#8b5a2b" stroke-width="2" fill="none" opacity="0.6"/>
-</svg>
-</div>
-
-
-
-
-<style>
-  body, html { margin:0; padding:0; width:100vw; height:100vh; overflow:hidden; }
-  @keyframes gradient {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
-  .animate-gradient {
-    background: linear-gradient(270deg, #1e3a8a, #111827, #1e3a8a);
-    background-size: 200% 200%;
-    animation: gradient 20s ease infinite;
-  }
-</style>
-
-<script src="https://cdn.tailwindcss.com"></script>
--->
 
 
 
