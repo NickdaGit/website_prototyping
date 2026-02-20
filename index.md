@@ -11,6 +11,39 @@ layout: none
   </div>
 </div>
 
+<!-- adding team here -->
+<section class="team">
+  <h2>Meet the Team</h2>
+  
+  <div class="grid">
+  
+    <div class="card">
+      <img src="assets/GUNTHER.JPG" alt="Gunther - Chief Banana Office and Lead Developer">
+      <h3>Gunther</h3>
+      <p>Lead Developer. Writes code faster than he eats bananas. Specializes in AI ethics... mostly.</p>
+    </div>
+    
+    <!-- Monkey 2 -->
+    <div class="card">
+      <img src="assets/BOB.JPG" alt="Lila the UX Monkey">
+      <h3>Lila</h3>
+      <p>Design Queen. Makes interfaces so intuitive even humans can use them. Hates clutter—except banana peels.</p>
+    </div>
+    
+    <!-- Monkey 3 -->
+    <div class="card">
+      <img src="assets/JEANCLAUDE.JPG" alt="Zara the Data Monkey">
+      <h3>Zara</h3>
+      <p>Data Wizard. Sees patterns in chaos. Once predicted the next banana shortage from cloud data.</p>
+    </div>
+    
+    <!-- Add more as needed -->
+  </div>
+</section>
+
+
+<!-- end adding team here   -->
+
 <style>
   /* all your hero CSS here */
   .hero { position: relative; width: 100%; height: 80vh; overflow: hidden; }
@@ -19,6 +52,51 @@ layout: none
   h1 { font-size: 4rem; margin: 0; }
   p { font-size: 1.5rem; }
   @media (max-width: 768px) { .hero { height: 60vh; } h1 { font-size: 3rem; } p { font-size: 1.2rem; } }
+
+  .team {
+    padding: 4rem 2rem;
+    text-align: center;
+    background: #f9f9f9;  /* light bg for contrast */
+  }
+  h2 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+  }
+  .card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+  .card h3 {
+    font-size: 1.8rem;
+    margin: 0.5rem 0;
+  }
+  .card p {
+    color: #555;
+    font-size: 1.1rem;
+  }
+
+
+
 </style>
 
 # Monkey Magic
