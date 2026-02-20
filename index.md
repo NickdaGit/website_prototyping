@@ -9,7 +9,7 @@ layout: none
   src="assets/MM_LOGO5.PNG" 
   alt="Monkey Magic Logo" 
   class="logo"
-  style="width: 180px; height: auto; background: transparent;" 
+  style="width: 200px; height: auto; background: transparent;" 
   />
 </div>
 
@@ -171,7 +171,7 @@ layout: none
 
 .logo {
   width: 12vw;
-  max-width: 180px;
+  max-width: 200px;
   min-width: 100px;
 }
 @media (max-width: 768px) {
