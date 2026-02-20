@@ -34,7 +34,7 @@ layout: none
       <h4>Datasets</h4>
       <p>Raw fuel for the brain</p>
     </a>
-    <a href="/training.md" class="bar-item">
+    <a href="training.md" class="bar-item">
       <h4>Training 101</h4>
       <p>How monkeys learn tricks</p>
     </a>
