@@ -94,12 +94,9 @@ layout: none
     color: #555;
     font-size: 1.1rem;
   }
-
-
-
+s1
 </style>
 
-# Monkey Magic
 
 <div class="layout">
   <!-- your under-construction monkey stuff here -->
