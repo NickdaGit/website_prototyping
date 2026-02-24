@@ -5,22 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MonkeyMagic.ai</title>
   <link rel="stylesheet" href="/assets/style.css">
-  <!-- Google Fonts (optional – works on GitHub Pages; for full offline you can download later) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Top nav -->
-  <nav class="top-nav">
-    <a href="/" class="logo-link">
-      <img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo" class="logo">
-    </a>
-    <div class="nav-links">
-      <a href="/about.html">About</a>
-      <a href="/knowledge/">Knowledge <span class="tagline">– for curious little monkeys</span></a>
-      <a href="/fun/">Fun Stuff <span class="tagline">– for cheeky little monkeys</span></a>
-    </div>
-  </nav>
+  <!-- Floating logo over hero -->
+  <div class="logo-overlay">
+    <img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo" class="logo">
+  </div>
 
   <!-- Hero -->
   <div class="hero">
@@ -31,6 +23,13 @@
       <h1>MonkeyMagic.ai</h1>
       <p>Where monkeys code, dream, and occasionally steal bananas</p>
     </div>
+  </div>
+
+  <!-- Nav strip right below hero -->
+  <div class="nav-strip">
+    <a href="/about.html">About</a>
+    <a href="/knowledge/">Knowledge <span class="tagline">– for curious little monkeys</span></a>
+    <a href="/fun/">Fun Stuff <span class="tagline">– for cheeky little monkeys</span></a>
   </div>
 
   <!-- Quick bar -->
@@ -81,13 +80,15 @@
     </div>
   </section>
 
-  <!-- Offline search -->
+  <!-- Search -->
   <div class="search-container">
-    <input type="text" id="search-input" placeholder="Search knowledge… (try 'AI' or 'banana')">
+    <input type="text" id="search-input" placeholder="Search knowledge…">
     <div id="search-results"></div>
   </div>
 
   <script src="/assets/search.js"></script>
+
 </body>
 </html>
+
 
