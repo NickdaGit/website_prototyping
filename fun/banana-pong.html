@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banana Pong - MonkeyMagic.ai</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top nav -->
+  <nav class="top-nav">
+    <a href="/" class="logo-link">
+      <img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo" class="logo">
+    </a>
+    <div class="nav-links">
+      <a href="/about.html">About</a>
+      <a href="/knowledge/">Knowledge <span class="tagline">– for curious little monkeys</span></a>
+      <a href="/fun/">Fun Stuff <span class="tagline">– for cheeky little monkeys</span></a>
+    </div>
+  </nav>
+
+  <!-- Game header -->
+  <div class="hero game-hero">
+    <div class="hero-text">
+      <h1>Banana Pong</h1>
+      <p>Keep the banana in the air. Gunther's record: 42 (he used a wand).</p>
+    </div>
+  </div>
+
+  <!-- Game canvas -->
+  <section class="game-section">
+    <div class="game-container">
+      <canvas id="pongCanvas" width="800" height="500"></canvas>
+      <div class="game-info">
+        <p>Score: <span id="score">0</span></p>
+        <p>High Score: <span id="highScore">0</span></p>
+        <button id="resetBtn">Reset Game</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer nudge -->
+  <footer>
+    <p>Back to <a href="/fun/">fun</a> – or try <a href="/fun/prompt-roulette.html">Prompt Roulette</a> next.</p>
+  </footer>
+
+  <script>
+    const canvas = document.getElementById('pongCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const highScoreEl = document.getElementById('highScore');
+    const resetBtn = document.getElementById('resetBtn');
+
+    let score = 0;
+    let highScore = localStorage.getItem('bananaPongHigh') || 0;
+    highScoreEl.textContent = highScore;
+
+    // Banana (ball)
+    let banana = { x: canvas.width / 2, y: canvas.height / 2, dx: 5, dy: -5, radius: 20 };
+    // Paddle
+    let paddle = { x: canvas.width / 2 - 50, y: canvas.height - 40, width: 100, height: 20, speed: 10 };
+
+    let rightPressed = false;
+    let leftPressed = false;
+
+    // Controls
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Right' || e.key === 'ArrowRight') rightPressed = true;
+      if (e.key === 'Left' || e.key === 'ArrowLeft') leftPressed = true;
+    });
+    document.addEventListener('keyup', (e) => {
+      if (e.key === 'Right' || e.key === 'ArrowRight') rightPressed = false;
+      if (e.key === 'Left' || e.key === 'ArrowLeft') leftPressed = false;
+    });
+
+    // Mouse for fun
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      paddle.x = e.clientX - rect.left - paddle.width / 2;
+      if (paddle.x < 0) paddle.x = 0;
+      if (paddle.x > canvas.width - paddle.width) paddle.x = canvas.width - paddle.width;
+    });
+
+    function drawBanana() {
+      ctx.beginPath();
+      ctx.arc(banana.x, banana.y, banana.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffcc00'; // banana yellow
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function drawPaddle() {
+      ctx.beginPath();
+      ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height);
+      ctx.fillStyle = '#8B4513'; // brown peel
+      ctx.fill();
+      ctx.closePath();
+    }
+
+    function update() {
+      // Move paddle
+      if (rightPressed && paddle.x < canvas.width - paddle.width) paddle.x += paddle.speed;
+      if (leftPressed && paddle.x > 0) paddle.x -= paddle.speed;
+
+      // Move banana
+      banana.x += banana.dx;
+      banana.y += banana.dy;
+
+      // Bounce walls
+      if (banana.x + banana.radius > canvas.width || banana.x - banana.radius < 0) banana.dx *= -1;
+      if (banana.y - banana.radius < 0) banana.dy *= -1;
+
+      // Paddle hit
+      if (banana.y + banana.radius > paddle.y && banana.x > paddle.x && banana.x < paddle.x + paddle.width) {
+        banana.dy *= -1;
+        score++;
+        scoreEl.textContent = score;
+        if (score > highScore) {
+          highScore = score;
+          highScoreEl.textContent = highScore;
+          localStorage.setItem('bananaPongHigh', highScore);
+        }
+      }
+
+      // Miss
+      if (banana.y + banana.radius > canvas.height) {
+        resetGame();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBanana();
+      drawPaddle();
+      update();
+      requestAnimationFrame(draw);
+    }
+
+    function resetGame() {
+      banana.x = canvas.width / 2;
+      banana.y = canvas.height / 2;
+      banana.dx = 5;
+      banana.dy = -5;
+      score = 0;
+      scoreEl.textContent = 0;
+    }
+
+    resetBtn.addEventListener('click', resetGame);
+
+    draw();
+  </script>
+
+</body>
+</html>
+
+
