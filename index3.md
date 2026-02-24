@@ -30,6 +30,10 @@ layout: none
       <h4>AI Weights</h4>
       <p>The real smarts—billions of numbers</p>
     </a>
+    <a href="/knowledge.md" class="bar-item">
+      <h4>Knowledge</h4>
+      <p>For curious little monkeys</p>
+    </a>
     <a href="/datasets.md" class="bar-item">
       <h4>Datasets</h4>
       <p>Raw fuel for the brain</p>
