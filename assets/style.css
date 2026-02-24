@@ -158,3 +158,23 @@ p { font-size: 1.5rem; }
   .nav-strip a { margin: 0 0.8rem; font-size: 0.9rem; }
   .bar-item { width: 180px; padding: 1.2rem 0.8rem; }
 }
+
+
+@media (max-width: 768px) {
+  .nav-strip {
+    padding: 0.8rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .nav-strip a {
+    margin: 0;
+    font-size: 1rem;
+  }
+  .hero-text h1 {
+    font-size: 2.8rem;
+  }
+  .hero-text p {
+    font-size: 1.1rem;
+  }
+}
