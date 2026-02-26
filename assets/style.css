@@ -1,184 +1,159 @@
 /* assets/style.css */
-body {
+/* Reset & base */
+* {
   margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #f8f9fa; /* changed from #0a0a0a to a light background color for better readability and modern look */
-  color: #333333; /* changed from #eee to a darker color for better readability on light background */
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f8f9fa;      /* soft off-white */
+  color: #333333;
+  font-family: system-ui, -apple-system, sans-serif;
   line-height: 1.6;
 }
 
-.logo-overlay {
-  position: absolute;
-  top: 15px;
-  left: 10px;
-  z-index: 10;
-}
-
+/* Logo */
 .logo {
-  width: 12vw; /* responsive logo size */
-  min-width: 100px; /* ensure it doesn't get too small */
-  max-width: 200px; /* prevent it from getting too large on big screens */
+  width: 12vw;
+  max-width: 200px;
+  min-width: 100px;
   height: auto;
+  margin: 20px 0 20px 20px;
   background: transparent;
 }
 
+.logo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .logo {
+    width: 20vw;
+    min-width: 110px;
+  }
+}
+
+/* Hero */
 .hero {
   position: relative;
   width: 100%;
-  height: 80vh;
+  height: 60vh;
+  background: transparent;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .hero video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  transform: translate(-50%, -50%);
+  width: 100vw !important;
+  height: 100%;
   object-fit: cover;
-}
-
-.hero-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  text-align: center;
-  text-shadow: 2px 2px 8px black;
-  z-index: 2;
+  margin: 0;
+  padding: 0;
 }
 
-h1 { font-size: 4rem; margin: 0; }
-p { font-size: 1.5rem; }
-
-.nav-strip {
-  background: #111;
-  padding: 1rem;
-  text-align: center;
-  border-top: 1px solid #222;
-  border-bottom: 1px solid #222;
-}
-
-.nav-strip a {
-  color: white;
-  text-decoration: none;
-  margin: 0 1.5rem;
-  font-weight: 600;
-}
-
-.tagline {
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-
+/* Nav & quick bar – light, no dark */
+.nav-strip,
 .quick-bar {
-  background: #111;
-  padding: 2.5rem 1rem;
-}
-
-.container {
+  background: transparent;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.bar-item {
-  background: #222;
-  color: white;
-  padding: 1.8rem 1.2rem;
-  border-radius: 16px;
+.nav-strip a,
+.quick-bar a {
+  color: #333;
   text-decoration: none;
-  width: 220px;
-  transition: all 0.3s;
+  font-weight: 500;
 }
 
-.bar-item:hover {
-  transform: scale(1.08);
-  background: #ffcc00;
-  color: #111;
+.nav-strip a:hover,
+.quick-bar a:hover {
+  color: #007bff;
 }
 
+/* Main content flow */
+.main-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: transparent;
+}
+
+/* Team cards – back to old style */
 .team {
-  padding: 5rem 2rem;
-  background: #111;
-  text-align: center;
+  padding: 2rem 0;
+  background: transparent;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 2rem;
+  padding: 0 1rem;
 }
 
 .card {
-  background: #1a1a1a;
-  border-radius: 16px;
-  padding: 1.5rem;
-  transition: transform 0.3s;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
 }
 
 .card:hover {
-  transform: translateY(-12px);
+  transform: translateY(-5px);
 }
 
 .card img {
   width: 100%;
-  height: 260px;
+  height: 220px;
   object-fit: cover;
-  border-radius: 12px;
 }
 
-.search-container {
-  max-width: 800px;
-  margin: 3rem auto;
-  padding: 0 1rem;
+.card h3 {
+  font-size: 1.8rem;
+  margin: 0.5rem 1rem;
+  color: #222;
+  font-weight: 700;
 }
 
-#search-input {
-  width: 100%;
-  padding: 1rem 1.5rem;
+.card p {
   font-size: 1.1rem;
-  border: none;
-  border-radius: 9999px;
-  background: #222;
-  color: white;
+  color: #555;
+  margin: 0 1rem 1rem;
+  line-height: 1.5;
 }
 
-@media (max-width: 768px) {
-  .logo {
-    width: 20vw; /*responsive logo size*/ 
-    min-width: 110px; /* ensure it doesn't get too small */
-  }
-  .hero { height: 60vh; }
-  h1 { font-size: 2.5rem; }
-  p { font-size: 1.2rem; }
-  .nav-strip a { margin: 0 0.8rem; font-size: 0.9rem; }
-  .bar-item { width: 180px; padding: 1.2rem 0.8rem; }
+/* About page tweaks */
+.about-team h3 {
+  font-size: 1.8rem;
+  color: #222;
+  margin-top: 2rem;
 }
 
+.about-team p {
+  font-size: 1.1rem;
+  color: #555;
+}
 
+/* Mobile tweaks */
 @media (max-width: 768px) {
-  .nav-strip {
-    padding: 0.8rem 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  .hero {
+    height: 40vh;
   }
-  .nav-strip a {
-    margin: 0;
-    font-size: 1rem;
-  }
-  .hero-text h1 {
-    font-size: 2.8rem;
-  }
-  .hero-text p {
-    font-size: 1.1rem;
+  .grid {
+    grid-template-columns: 1fr;
   }
 }

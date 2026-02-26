@@ -22,20 +22,25 @@ body {
   background: transparent;
 }
 
+/* The .hero class is updated to use flexbox for centering content and to remove the black bar background */
 .hero {
-  position: relative;
-  width: 100%;
-  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  background: transparent;   /* ← no black bar */
   overflow: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
+/* The video is updated to be full width and centered without cropping */
 .hero video {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  transform: translate(-50%, -50%);
+  width: 100vw;             /* ← full width, no crop */
+  margin-left: 50%;         /* ← centers it perfectly */
+  transform: translateX(-50%);
+  height: 100%;
   object-fit: cover;
 }
 
