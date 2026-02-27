@@ -1,0 +1,171 @@
+<!-- /knowledge/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monkey Club – AI Basics</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { 
+      font-family: 'Inter', system-ui, sans-serif; 
+      background: #f8f9fa; 
+      color: #333; 
+      height: 100vh; 
+      overflow: hidden; 
+    }
+    header { 
+      position: fixed; top:0; left:0; right:0; 
+      padding: 1rem; background: white; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+      z-index: 10; 
+      display: flex; justify-content: space-between; align-items: center; 
+    }
+    .logo { height: 48px; } /* put your MMLogo5.png here */
+    .back { color: #2E7D32; text-decoration: none; font-weight: bold; }
+    .slide-container { 
+      height: 100vh; width: 100vw; 
+      position: relative; 
+      overflow: hidden; 
+    }
+    .slide { 
+      position: absolute; top:0; left:0; 
+      width: 100%; height: 100%; 
+      background: white; 
+      border-radius: 0; 
+      padding: 2rem; 
+      display: flex; flex-direction: column; justify-content: center; 
+      transition: transform 0.4s ease; 
+      transform: translateX(100%); 
+    }
+    .slide.active { transform: translateX(0); }
+    .slide.prev { transform: translateX(-100%); }
+    h1 { color: #2E7D32; margin-bottom: 1rem; font-size: 2.2rem; }
+    p.teaser { font-size: 1.3rem; color: #555; margin-bottom: 2rem; }
+    .content { font-size: 1.1rem; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+    .nav { 
+      position: fixed; bottom: 2rem; left: 0; right: 0; 
+      display: flex; justify-content: space-around; 
+      padding: 1rem; background: rgba(255,255,255,0.9); 
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.1); 
+    }
+    button { 
+      padding: 1rem 2rem; font-size: 1.1rem; 
+      border: none; border-radius: 8px; cursor: pointer; 
+    }
+    .prev-btn { background: #FFB300; color: white; }
+    .next-btn { background: #2E7D32; color: white; }
+    @media (min-width: 768px) {
+      .slide { padding: 4rem; }
+      h1 { font-size: 3rem; }
+      .content { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="/images/MMLogo5.png" alt="Monkey Magic Logo" class="logo">
+  <a href="/" class="back">Back to Main Site</a>
+</header>
+
+<div class="slide-container">
+  <!-- Slide 1: Hub -->
+  <div class="slide active" id="hub">
+    <h1>Welcome to AI Basics</h1>
+    <p class="teaser">Curated notes for curious little monkeys. Swipe or tap to explore.</p>
+    <div class="content">
+      <p>Start here: pick a path.</p>
+      <button class="next-btn" onclick="goTo('closures')">Closures</button>
+      <button class="next-btn" onclick="goTo('rag')">RAG Basics</button>
+    </div>
+  </div>
+
+  <!-- Slide 2: Closures -->
+  <div class="slide" id="closures">
+    <h1>Closures in Python</h1>
+    <p class="teaser">Functions that remember where they came from—like a backpack you pack once and carry forever.</p>
+    <div class="content">
+      <p>A closure is a function that "closes over" variables from its outer scope. Even after the outer function finishes, the inner one keeps access.</p>
+      <pre><code>def outer():
+    x = 10
+    def inner():
+        print(x)  # still sees x!
+    return inner
+
+f = outer()
+f()  # → 10</code></pre>
+      <p>Got it? It's magic without the wand.</p>
+    </div>
+  </div>
+
+  <!-- Slide 3: RAG Basics -->
+  <div class="slide" id="rag">
+    <h1>RAG Basics</h1>
+    <p class="teaser">Retrieval-Augmented Generation: pull facts before you answer—no more made-up nonsense.</p>
+    <div class="content">
+      <p>RAG means: search your notes first, then let the AI reply. Like checking your diary before you tell a story.</p>
+      <p>Why? Because LLMs hallucinate. RAG grounds them.</p>
+      <p>Got it? Now you're smarter than most bots.</p>
+    </div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="prev-btn" onclick="prevSlide()">Back</button>
+  <button class="next-btn" onclick="nextSlide()">Next</button>
+</div>
+
+<script>
+  // Token check – replace 'banana42' with your real code
+  const url = new URL(window.location);
+  const token = url.searchParams.get('token');
+  if (!token || token !== 'banana42') {
+    window.location = '/private/index.html';
+  }
+
+  // Auto-append token to links (if you add <a> tags later)
+  document.querySelectorAll('a').forEach(a => {
+    let href = a.href;
+    if (!href.includes('?token=')) {
+      a.href = href + (href.includes('?') ? '&' : '?') + 'token=' + token;
+    }
+  });
+
+  // Simple slide navigation
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+
+  function showSlide(n) {
+    slides.forEach(s => s.classList.remove('active'));
+    slides .classList.add('active');
+    current = n;
+  }
+
+  function nextSlide() {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }
+
+  function prevSlide() {
+    current = (current - 1 + slides.length) % slides.length;
+    showSlide(current);
+  }
+
+  // Swipe support (mobile)
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    let touchEndX = e.changedTouches[0].clientX;
+    if (touchStartX - touchEndX > 50) nextSlide();
+    if (touchEndX - touchStartX > 50) prevSlide();
+  });
+
+  // Arrow keys (desktop)
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') nextSlide();
+    if (e.key === 'ArrowLeft') prevSlide();
+  });
+</script>
+</body>
+</html>
