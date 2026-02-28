@@ -36,48 +36,9 @@
 }
 
 /* ---- VARIANT: ORIGINAL ---- */
-/* Uses default monkeymagic.css styles — no overrides needed */
+/* Default card styling — no overrides needed */
 
-/* ---- VARIANT: WARM ---- */
-body.variant-warm {
-  background: #faf8f5;
-}
-
-body.variant-warm .poc-hero {
-  background: linear-gradient(135deg, #e8d5b7 0%, #c9a96e 100%);
-}
-
-body.variant-warm .poc-hero-text h1 {
-  color: #3d2b1f;
-}
-
-body.variant-warm .poc-hero-text p {
-  color: #5a4434;
-}
-
-body.variant-warm .poc-section-cards {
-  background: #f5f0e8;
-}
-
-body.variant-warm .poc-section-card {
-  background: #fffcf7;
-  border-color: #e0d4c2;
-  box-shadow: 0 2px 10px rgba(139, 109, 63, 0.08);
-}
-
-body.variant-warm .poc-section-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(139, 109, 63, 0.15);
-}
-
-body.variant-warm .poc-section-card h3 {
-  color: #3d2b1f;
-}
-
-body.variant-warm .poc-section-card p {
-  color: #7a6652;
-}
-
+/* ---- VARIANT: WARM (card-only overrides) ---- */
 body.variant-warm .variant-btn.active {
   background: #b8860b;
   border-color: #b8860b;
@@ -88,59 +49,27 @@ body.variant-warm .variant-btn:hover {
   color: #b8860b;
 }
 
-body.variant-warm .variant-switcher {
-  background: #f5f0e8;
+body.variant-warm .poc-section-card {
+  background: #fffcf7;
+  border: 2px solid #e0d4c2;
+  border-radius: 20px;
+  box-shadow: 0 3px 14px rgba(139, 109, 63, 0.1);
 }
 
-body.variant-warm .poc-footer {
-  background: #f5f0e8;
-  border-color: #e0d4c2;
+body.variant-warm .poc-section-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(139, 109, 63, 0.18);
 }
 
-body.variant-warm .poc-footer a {
+body.variant-warm .poc-section-card h3 {
   color: #b8860b;
 }
 
-/* ---- VARIANT: COOL ---- */
-body.variant-cool {
-  background: #f0f2f7;
+body.variant-warm .poc-section-card p {
+  color: #7a6652;
 }
 
-body.variant-cool .poc-hero {
-  background: linear-gradient(135deg, #667eea 0%, #3b4c8a 100%);
-}
-
-body.variant-cool .poc-hero-text h1 {
-  color: #ffffff;
-}
-
-body.variant-cool .poc-hero-text p {
-  color: #d4daf0;
-}
-
-body.variant-cool .poc-section-cards {
-  background: #e8ecf4;
-}
-
-body.variant-cool .poc-section-card {
-  background: #f8f9fc;
-  border-color: #c8cfe0;
-  box-shadow: 0 3px 12px rgba(59, 76, 138, 0.08);
-}
-
-body.variant-cool .poc-section-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 12px 32px rgba(59, 76, 138, 0.18);
-}
-
-body.variant-cool .poc-section-card h3 {
-  color: #2c3e6b;
-}
-
-body.variant-cool .poc-section-card p {
-  color: #5a6a8a;
-}
-
+/* ---- VARIANT: COOL (card-only overrides) ---- */
 body.variant-cool .variant-btn.active {
   background: #3b4c8a;
   border-color: #3b4c8a;
@@ -151,17 +80,24 @@ body.variant-cool .variant-btn:hover {
   color: #3b4c8a;
 }
 
-body.variant-cool .variant-switcher {
-  background: #e8ecf4;
+body.variant-cool .poc-section-card {
+  background: #f2f4f8;
+  border: 1px solid #c0c8d8;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(59, 76, 138, 0.12);
 }
 
-body.variant-cool .poc-footer {
-  background: #e8ecf4;
-  border-color: #c8cfe0;
+body.variant-cool .poc-section-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 14px 36px rgba(59, 76, 138, 0.22);
 }
 
-body.variant-cool .poc-footer a {
-  color: #3b4c8a;
+body.variant-cool .poc-section-card h3 {
+  color: #2c3e6b;
+}
+
+body.variant-cool .poc-section-card p {
+  color: #5a6a8a;
 }
 
 /* ---- POC-SCOPED base layout (mirrors homepage but prefixed) ---- */
@@ -174,7 +110,6 @@ body.variant-cool .poc-footer a {
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #4a6cf7 0%, #1a1a2e 100%);
-  transition: background 0.4s ease;
 }
 
 .poc-hero-text {
@@ -190,7 +125,6 @@ body.variant-cool .poc-footer a {
   margin: 0 0 0.5rem;
   letter-spacing: -0.02em;
   color: #ffffff;
-  transition: color 0.4s ease;
 }
 
 .poc-hero-text p {
@@ -199,14 +133,12 @@ body.variant-cool .poc-footer a {
   margin: 0;
   opacity: 0.95;
   color: #c4d0f7;
-  transition: color 0.4s ease;
 }
 
 .poc-section-cards {
   background: #f7f8fa;
   padding: 4rem 2rem;
   text-align: center;
-  transition: background 0.4s ease;
 }
 
 .poc-section-cards .container {
@@ -226,7 +158,7 @@ body.variant-cool .poc-footer a {
   width: 280px;
   text-decoration: none;
   color: #2d2d2d;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease, border-color 0.4s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease, border-color 0.4s ease, border-radius 0.4s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   cursor: default;
 }
@@ -259,14 +191,12 @@ body.variant-cool .poc-footer a {
   border-top: 1px solid #e2e5ea;
   color: #888;
   font-size: 0.95rem;
-  transition: background 0.4s ease, border-color 0.4s ease;
 }
 
 .poc-footer a {
   color: #4a6cf7;
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.4s ease;
 }
 
 .poc-footer a:hover {

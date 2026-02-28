@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Banana Runner - Monkey Magic AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .game-logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+    }
+    .game-logo img {
+      width: 80px;
+      height: auto;
+    }
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      max-width: 100%;
+    }
+    canvas {
+      display: block;
+      border: 2px solid #333;
+      image-rendering: pixelated;
+      max-width: 100%;
+      height: auto;
+    }
+    .back-link {
+      margin-top: 16px;
+      padding: 8px 20px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .back-link:hover { background: #333; color: #fff; }
+    .touch-controls {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 16px 20px;
+      justify-content: center;
+      z-index: 30;
+      pointer-events: none;
+    }
+    .touch-btn {
+      width: 120px;
+      height: 60px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      pointer-events: auto;
+    }
+    .touch-btn:active { background: rgba(255,255,255,0.35); }
+    @media (max-width: 520px) {
+      .touch-controls { display: flex; }
+      .game-wrapper { padding: 5px; }
+      .game-logo { display: none; }
+      body { padding-bottom: 100px; }
+    }
+    @media (pointer: coarse) {
+      .touch-controls { display: flex; }
+      body { padding-bottom: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="game-logo">
+  <a href="/"><img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo"></a>
+</div>
+
+<div class="game-wrapper">
+  <canvas id="game" width="480" height="320"></canvas>
+  <a href="/fun.html" class="back-link">Back to Fun</a>
+</div>
+
+<div class="touch-controls">
+  <button class="touch-btn" id="btn-jump">JUMP</button>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var canvas = document.getElementById('game');
+  var ctx = canvas.getContext('2d');
+  var CW = 480;
+  var CH = 320;
+
+  // --- Constants ---
+  var GROUND_Y = 260;
+  var GROUND_H = 60;
+  var GRAVITY = 0.55;
+  var JUMP_POWER = -9.5;
+  var DOUBLE_JUMP_POWER = -8;
+  var BASE_SPEED = 3.5;
+  var MAX_SPEED = 9;
+  var SPEED_ACCEL = 0.0008;
+
+  // Pixel art scale
+  var PS = 4;
+
+  // --- Colours ---
+  var COL_SKY_TOP = '#0a0a2e';
+  var COL_SKY_BOT = '#1a2a5e';
+  var COL_HILL_FAR = '#0f1f3a';
+  var COL_HILL_MID = '#162844';
+  var COL_TREE_TRUNK = '#2a1a0a';
+  var COL_TREE_LEAVES = '#1a4a20';
+  var COL_TREE_LIGHT = '#2d6a30';
+  var COL_GROUND = '#654321';
+  var COL_GROUND_DARK = '#4a3018';
+  var COL_GRASS = '#3a8a30';
+  var COL_GRASS_LIGHT = '#4aaa40';
+  var COL_CRATE = '#8B6914';
+  var COL_CRATE_DARK = '#6a4f0f';
+  var COL_CRATE_LIGHT = '#a88030';
+  var COL_ROCK = '#556';
+  var COL_ROCK_LIGHT = '#778';
+  var COL_ROCK_DARK = '#334';
+  var COL_BANANA = '#f0e040';
+  var COL_BANANA_DARK = '#c0a820';
+
+  // --- Game State ---
+  var state = 'title';
+  var frameCount = 0;
+  var score = 0;
+  var distance = 0;
+  var bananaCount = 0;
+  var bestScore = 0;
+  var gameSpeed = BASE_SPEED;
+
+  // Try load best score
+  try { bestScore = parseInt(localStorage.getItem('bananaRunnerBest')) || 0; } catch(e) {}
+
+  // Monkey
+  var monkey = {};
+  // Ground segments
+  var groundSegs = [];
+  // Obstacles
+  var obstacles = [];
+  var obstacleTimer = 0;
+  var minObstacleGap = 120;
+  // Bananas
+  var bananas = [];
+  var bananaTimer = 0;
+  // Parallax offsets
+  var scrollFar = 0;
+  var scrollMid = 0;
+  var scrollNear = 0;
+
+  // --- Input ---
+  var jumpPressed = false;
+  var jumpPrev = false;
+  var jumpHeld = false;
+  var touchJumpPressed = false;
+  var touchJumpPrev = false;
+
+  document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+      jumpPressed = true;
+      jumpHeld = true;
+      e.preventDefault();
+    }
+  });
+  document.addEventListener('keyup', function(e) {
+    if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
+      jumpHeld = false;
+    }
+  });
+
+  // Touch
+  var btnJump = document.getElementById('btn-jump');
+  if (btnJump) {
+    btnJump.addEventListener('touchstart', function(e) { e.preventDefault(); touchJumpPressed = true; jumpHeld = true; }, { passive: false });
+    btnJump.addEventListener('touchend', function(e) { e.preventDefault(); jumpHeld = false; }, { passive: false });
+    btnJump.addEventListener('touchcancel', function() { jumpHeld = false; });
+    btnJump.addEventListener('mousedown', function(e) { e.preventDefault(); touchJumpPressed = true; jumpHeld = true; });
+    btnJump.addEventListener('mouseup', function(e) { e.preventDefault(); jumpHeld = false; });
+    btnJump.addEventListener('mouseleave', function() { jumpHeld = false; });
+  }
+
+  // Canvas tap to jump
+  canvas.addEventListener('touchstart', function(e) { e.preventDefault(); touchJumpPressed = true; jumpHeld = true; }, { passive: false });
+  canvas.addEventListener('touchend', function(e) { e.preventDefault(); jumpHeld = false; }, { passive: false });
+  canvas.addEventListener('mousedown', function(e) {
+    if (state === 'title' || state === 'gameOver') {
+      touchJumpPressed = true;
+    } else {
+      touchJumpPressed = true;
+      jumpHeld = true;
+    }
+  });
+  canvas.addEventListener('mouseup', function() { jumpHeld = false; });
+
+  function justJumped() {
+    var kj = jumpPressed && !jumpPrev;
+    var tj = touchJumpPressed && !touchJumpPrev;
+    return kj || tj;
+  }
+
+  function updateInput() {
+    jumpPrev = jumpPressed;
+    touchJumpPrev = touchJumpPressed;
+    jumpPressed = false;
+    touchJumpPressed = false;
+  }
+
+  // --- Monkey ---
+  // Pixel art sprites (4×6 grid, rendered at PS scale = 16×24 px)
+  var BR = '#8B4513';  // brown body
+  var LB = '#c47a34';  // light brown
+  var FL = '#e8b878';  // flesh
+  var BK = '#111';     // black
+  var YL = '#f0e040';  // yellow hat
+
+  var monkeyRun1 = [
+    [0, YL, YL, 0],
+    [FL, FL, FL, FL],
+    [0, BK, BK, 0],
+    [BR, LB, LB, BR],
+    [0, LB, LB, 0],
+    [FL, 0, 0, FL]
+  ];
+  var monkeyRun2 = [
+    [0, YL, YL, 0],
+    [FL, FL, FL, FL],
+    [0, BK, BK, 0],
+    [BR, LB, LB, BR],
+    [FL, LB, LB, FL],
+    [0, 0, 0, 0]
+  ];
+  var monkeyRun3 = [
+    [0, YL, YL, 0],
+    [FL, FL, FL, FL],
+    [0, BK, BK, 0],
+    [BR, LB, LB, BR],
+    [0, LB, LB, 0],
+    [0, FL, FL, 0]
+  ];
+  var monkeyJump = [
+    [0, YL, YL, 0],
+    [FL, FL, FL, FL],
+    [0, BK, BK, 0],
+    [BR, LB, LB, BR],
+    [FL, LB, LB, FL],
+    [0, FL, FL, 0]
+  ];
+  var monkeyDead = [
+    [0, 0, 0, 0],
+    [YL, FL, FL, YL],
+    [FL, BK, BK, FL],
+    [0, LB, LB, 0],
+    [BR, LB, LB, BR],
+    [FL, 0, 0, FL]
+  ];
+
+  var runFrames = [monkeyRun1, monkeyRun2, monkeyRun3, monkeyRun2];
+
+  function drawPixels(ox, oy, pixels) {
+    for (var r = 0; r < pixels.length; r++) {
+      for (var c = 0; c < pixels[r].length; c++) {
+        var col = pixels[r][c];
+        if (col) {
+          ctx.fillStyle = col;
+          ctx.fillRect(Math.floor(ox + c * PS), Math.floor(oy + r * PS), PS, PS);
+        }
+      }
+    }
+  }
+
+  function resetMonkey() {
+    monkey = {
+      x: 60,
+      y: GROUND_Y - 24,
+      w: 16,
+      h: 24,
+      vy: 0,
+      onGround: true,
+      canDoubleJump: true,
+      dead: false,
+      deathTimer: 0,
+      runFrame: 0,
+      runTimer: 0,
+      jumpHoldFrames: 0
+    };
+  }
+
+  // --- Ground ---
+  function initGround() {
+    groundSegs = [];
+    // Fill initial screen + buffer with solid ground
+    for (var x = 0; x < CW + 200; x += 40) {
+      groundSegs.push({ x: x, w: 40, gap: false });
+    }
+  }
+
+  function spawnGroundSeg() {
+    var last = groundSegs[groundSegs.length - 1];
+    var nx = last.x + last.w;
+
+    // Decide if this should be a gap (only at higher speeds)
+    var gapChance = (gameSpeed > 4.5) ? 0.08 : 0;
+    // Don't place gaps too close together
+    var recentGap = false;
+    for (var i = groundSegs.length - 1; i >= Math.max(0, groundSegs.length - 4); i--) {
+      if (groundSegs[i].gap) { recentGap = true; break; }
+    }
+
+    if (!recentGap && Math.random() < gapChance) {
+      var gapW = 50 + Math.random() * 30;
+      groundSegs.push({ x: nx, w: gapW, gap: true });
+    } else {
+      groundSegs.push({ x: nx, w: 40 + Math.random() * 40, gap: false });
+    }
+  }
+
+  // --- Obstacle generation ---
+  function spawnObstacle() {
+    var types = ['crate', 'crate2', 'rock'];
+    var type = types[Math.floor(Math.random() * types.length)];
+    var obs = { x: CW + 20, type: type };
+
+    if (type === 'crate') {
+      obs.w = 28;
+      obs.h = 28;
+      obs.y = GROUND_Y - 28;
+    } else if (type === 'crate2') {
+      obs.w = 28;
+      obs.h = 56;
+      obs.y = GROUND_Y - 56;
+    } else {
+      obs.w = 36;
+      obs.h = 22;
+      obs.y = GROUND_Y - 22;
+    }
+    obstacles.push(obs);
+  }
+
+  // --- Banana generation ---
+  function spawnBanana() {
+    var heights = [GROUND_Y - 50, GROUND_Y - 90, GROUND_Y - 130, GROUND_Y - 160];
+    var by = heights[Math.floor(Math.random() * heights.length)];
+    bananas.push({
+      x: CW + 20 + Math.random() * 60,
+      y: by,
+      baseY: by,
+      collected: false,
+      bobOffset: Math.random() * Math.PI * 2
+    });
+  }
+
+  // --- Drawing ---
+  function drawBackground() {
+    // Sky gradient
+    var grad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+    grad.addColorStop(0, COL_SKY_TOP);
+    grad.addColorStop(1, COL_SKY_BOT);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, CW, GROUND_Y);
+
+    // Stars
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    var starSeed = [23, 78, 134, 201, 267, 345, 412, 56, 189, 310, 90, 445, 160, 380, 35];
+    for (var i = 0; i < starSeed.length; i++) {
+      var sx = (starSeed[i] + scrollFar * 0.05) % CW;
+      if (sx < 0) sx += CW;
+      var sy = (starSeed[i] * 0.37 + i * 17) % (GROUND_Y * 0.6);
+      ctx.fillRect(sx, sy, 2, 2);
+    }
+
+    // Far hills
+    ctx.fillStyle = COL_HILL_FAR;
+    for (var hx = -200; hx < CW + 200; hx += 160) {
+      var hoffset = ((hx + scrollFar * 0.2) % (CW + 400)) - 200;
+      drawHill(hoffset, GROUND_Y - 20, 140, 70);
+    }
+
+    // Mid hills / trees
+    ctx.fillStyle = COL_HILL_MID;
+    for (var mx = -120; mx < CW + 200; mx += 120) {
+      var moffset = ((mx + scrollMid * 0.5) % (CW + 320)) - 120;
+      drawHill(moffset, GROUND_Y - 5, 100, 50);
+    }
+
+    // Trees (mid layer)
+    for (var tx = -60; tx < CW + 200; tx += 90) {
+      var toffset = ((tx + scrollMid * 0.5) % (CW + 260)) - 60;
+      drawTree(toffset, GROUND_Y);
+    }
+  }
+
+  function drawHill(x, baseY, w, h) {
+    ctx.beginPath();
+    ctx.moveTo(x, baseY);
+    ctx.quadraticCurveTo(x + w / 2, baseY - h, x + w, baseY);
+    ctx.fill();
+  }
+
+  function drawTree(x, baseY) {
+    // Trunk
+    ctx.fillStyle = COL_TREE_TRUNK;
+    ctx.fillRect(x + 8, baseY - 50, 8, 50);
+    // Canopy
+    ctx.fillStyle = COL_TREE_LEAVES;
+    ctx.beginPath();
+    ctx.arc(x + 12, baseY - 55, 22, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = COL_TREE_LIGHT;
+    ctx.beginPath();
+    ctx.arc(x + 8, baseY - 60, 12, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function drawGroundSegs() {
+    for (var i = 0; i < groundSegs.length; i++) {
+      var seg = groundSegs[i];
+      if (seg.gap) continue;
+      if (seg.x + seg.w < 0 || seg.x > CW) continue;
+
+      // Grass top
+      ctx.fillStyle = COL_GRASS;
+      ctx.fillRect(seg.x, GROUND_Y, seg.w, 4);
+      ctx.fillStyle = COL_GRASS_LIGHT;
+      ctx.fillRect(seg.x, GROUND_Y, seg.w, 2);
+
+      // Dirt
+      ctx.fillStyle = COL_GROUND;
+      ctx.fillRect(seg.x, GROUND_Y + 4, seg.w, GROUND_H - 4);
+
+      // Texture lines
+      ctx.fillStyle = COL_GROUND_DARK;
+      for (var dx = seg.x; dx < seg.x + seg.w; dx += 12) {
+        ctx.fillRect(dx, GROUND_Y + 14, 8, 2);
+        ctx.fillRect(dx + 6, GROUND_Y + 30, 8, 2);
+        ctx.fillRect(dx + 2, GROUND_Y + 46, 8, 2);
+      }
+    }
+
+    // Fill below ground to bottom of canvas
+    ctx.fillStyle = COL_GROUND_DARK;
+    ctx.fillRect(0, GROUND_Y + GROUND_H, CW, CH - GROUND_Y - GROUND_H);
+  }
+
+  function drawObstacleObj(obs) {
+    if (obs.type === 'crate' || obs.type === 'crate2') {
+      var numCrates = obs.type === 'crate2' ? 2 : 1;
+      for (var ci = 0; ci < numCrates; ci++) {
+        var cy = obs.y + ci * 28;
+        // Crate body
+        ctx.fillStyle = COL_CRATE;
+        ctx.fillRect(obs.x, cy, 28, 28);
+        // Border
+        ctx.fillStyle = COL_CRATE_DARK;
+        ctx.fillRect(obs.x, cy, 28, 3);
+        ctx.fillRect(obs.x, cy + 25, 28, 3);
+        ctx.fillRect(obs.x, cy, 3, 28);
+        ctx.fillRect(obs.x + 25, cy, 3, 28);
+        // Cross
+        ctx.fillStyle = COL_CRATE_LIGHT;
+        ctx.fillRect(obs.x + 12, cy + 4, 4, 20);
+        ctx.fillRect(obs.x + 4, cy + 12, 20, 4);
+      }
+    } else if (obs.type === 'rock') {
+      ctx.fillStyle = COL_ROCK;
+      ctx.beginPath();
+      ctx.moveTo(obs.x, obs.y + obs.h);
+      ctx.lineTo(obs.x + 5, obs.y + 4);
+      ctx.lineTo(obs.x + 14, obs.y);
+      ctx.lineTo(obs.x + 26, obs.y + 2);
+      ctx.lineTo(obs.x + 36, obs.y + obs.h);
+      ctx.fill();
+      // Highlight
+      ctx.fillStyle = COL_ROCK_LIGHT;
+      ctx.beginPath();
+      ctx.moveTo(obs.x + 8, obs.y + obs.h - 4);
+      ctx.lineTo(obs.x + 10, obs.y + 6);
+      ctx.lineTo(obs.x + 18, obs.y + 4);
+      ctx.lineTo(obs.x + 20, obs.y + obs.h - 4);
+      ctx.fill();
+    }
+  }
+
+  function drawBananaObj(ban) {
+    if (ban.collected) return;
+    var bx = ban.x;
+    var by = ban.y;
+    // Banana shape — small pixel art
+    ctx.fillStyle = COL_BANANA;
+    ctx.fillRect(bx, by + 2, 4, 10);
+    ctx.fillRect(bx + 4, by, 4, 10);
+    ctx.fillRect(bx + 8, by + 2, 4, 6);
+    // Stem
+    ctx.fillStyle = COL_BANANA_DARK;
+    ctx.fillRect(bx + 4, by + 10, 4, 3);
+    // Shine
+    ctx.fillStyle = '#fff';
+    ctx.globalAlpha = 0.4;
+    ctx.fillRect(bx + 2, by + 3, 2, 3);
+    ctx.globalAlpha = 1;
+  }
+
+  function drawMonkeyChar() {
+    if (monkey.dead) {
+      if (Math.floor(monkey.deathTimer / 5) % 2 === 0) {
+        drawPixels(monkey.x, monkey.y, monkeyDead);
+      }
+      return;
+    }
+    var sprite;
+    if (!monkey.onGround) {
+      sprite = monkeyJump;
+    } else {
+      sprite = runFrames[monkey.runFrame % runFrames.length];
+    }
+    drawPixels(monkey.x, monkey.y, sprite);
+  }
+
+  function drawHUD() {
+    // Semi-transparent bar
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.fillRect(0, 0, CW, 28);
+
+    ctx.font = 'bold 13px monospace';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#f0e040';
+    var distMetres = Math.floor(distance / 10);
+    ctx.fillText('SCORE: ' + (distMetres + bananaCount * 50), 10, 19);
+
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#888';
+    ctx.fillText('BEST: ' + bestScore, CW / 2, 19);
+
+    ctx.textAlign = 'right';
+    ctx.fillStyle = COL_BANANA;
+    ctx.fillText('BANANAS: ' + bananaCount, CW - 10, 19);
+  }
+
+  function drawTitle() {
+    // Draw background
+    drawBackground();
+    drawGroundSegs();
+
+    // Darken overlay
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, 0, CW, CH);
+
+    // Title
+    ctx.fillStyle = COL_BANANA;
+    ctx.font = 'bold 32px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('BANANA', CW / 2, 80);
+    ctx.fillText('RUNNER', CW / 2, 116);
+
+    ctx.fillStyle = '#4a6cf7';
+    ctx.font = '12px monospace';
+    ctx.fillText('MONKEY MAGIC AI EDITION', CW / 2, 140);
+
+    // Draw monkey in centre
+    drawPixels(CW / 2 - 8, 158, monkeyRun1);
+
+    // Draw banana
+    ctx.fillStyle = COL_BANANA;
+    ctx.fillRect(CW / 2 + 20, 165, 4, 10);
+    ctx.fillRect(CW / 2 + 24, 163, 4, 10);
+    ctx.fillRect(CW / 2 + 28, 165, 4, 6);
+
+    // Best score
+    if (bestScore > 0) {
+      ctx.fillStyle = '#888';
+      ctx.font = '13px monospace';
+      ctx.fillText('BEST: ' + bestScore, CW / 2, 210);
+    }
+
+    // Instructions
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px monospace';
+    var blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) {
+      ctx.fillText('PRESS SPACE TO START', CW / 2, 245);
+    }
+
+    ctx.fillStyle = '#888';
+    ctx.font = '11px monospace';
+    ctx.fillText('SPACE / TAP: JUMP', CW / 2, 275);
+    ctx.fillText('DOUBLE TAP FOR DOUBLE JUMP', CW / 2, 292);
+  }
+
+  function drawGameOverScreen() {
+    // Darken
+    ctx.fillStyle = 'rgba(0,0,0,0.8)';
+    ctx.fillRect(0, 0, CW, CH);
+
+    ctx.fillStyle = '#cc2222';
+    ctx.font = 'bold 34px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', CW / 2, 80);
+
+    var finalScore = Math.floor(distance / 10) + bananaCount * 50;
+    ctx.fillStyle = COL_BANANA;
+    ctx.font = '18px monospace';
+    ctx.fillText('SCORE: ' + finalScore, CW / 2, 125);
+
+    ctx.fillStyle = '#00f0f0';
+    ctx.font = '14px monospace';
+    ctx.fillText('DISTANCE: ' + Math.floor(distance / 10) + 'm', CW / 2, 160);
+    ctx.fillText('BANANAS: ' + bananaCount, CW / 2, 182);
+
+    if (finalScore >= bestScore && finalScore > 0) {
+      ctx.fillStyle = '#f0e040';
+      ctx.font = 'bold 14px monospace';
+      ctx.fillText('NEW BEST!', CW / 2, 215);
+    } else {
+      ctx.fillStyle = '#888';
+      ctx.font = '13px monospace';
+      ctx.fillText('BEST: ' + bestScore, CW / 2, 215);
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px monospace';
+    var blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) {
+      ctx.fillText('PRESS SPACE TO RESTART', CW / 2, 265);
+    }
+  }
+
+  // --- Game Logic ---
+  function startGame() {
+    resetMonkey();
+    initGround();
+    obstacles = [];
+    bananas = [];
+    obstacleTimer = 0;
+    bananaTimer = 0;
+    score = 0;
+    distance = 0;
+    bananaCount = 0;
+    gameSpeed = BASE_SPEED;
+    scrollFar = 0;
+    scrollMid = 0;
+    scrollNear = 0;
+    state = 'playing';
+  }
+
+  function updatePlaying() {
+    frameCount++;
+
+    // Speed ramp
+    gameSpeed = Math.min(MAX_SPEED, BASE_SPEED + distance * SPEED_ACCEL);
+
+    // Scroll parallax
+    scrollFar += gameSpeed;
+    scrollMid += gameSpeed;
+    scrollNear += gameSpeed;
+
+    // Distance
+    if (!monkey.dead) {
+      distance += gameSpeed * 0.3;
+    }
+
+    // --- Monkey physics ---
+    if (!monkey.dead) {
+      // Jump
+      if (justJumped()) {
+        if (monkey.onGround) {
+          monkey.vy = JUMP_POWER;
+          monkey.onGround = false;
+          monkey.canDoubleJump = true;
+          monkey.jumpHoldFrames = 1;
+        } else if (monkey.canDoubleJump) {
+          monkey.vy = DOUBLE_JUMP_POWER;
+          monkey.canDoubleJump = false;
+          monkey.jumpHoldFrames = 1;
+        }
+      }
+
+      // Variable jump height — if still holding and going up, reduce gravity
+      if (jumpHeld && monkey.vy < 0 && monkey.jumpHoldFrames > 0 && monkey.jumpHoldFrames < 12) {
+        monkey.jumpHoldFrames++;
+        // Reduce gravity while holding
+        monkey.vy += GRAVITY * 0.5;
+      } else {
+        monkey.vy += GRAVITY;
+        monkey.jumpHoldFrames = 0;
+      }
+
+      monkey.y += monkey.vy;
+
+      // Ground collision
+      monkey.onGround = false;
+      var monkeyFootX = monkey.x + monkey.w / 2;
+      var onSolidGround = false;
+      for (var gi = 0; gi < groundSegs.length; gi++) {
+        var seg = groundSegs[gi];
+        if (seg.gap) continue;
+        if (monkeyFootX >= seg.x && monkeyFootX <= seg.x + seg.w) {
+          if (monkey.y + monkey.h >= GROUND_Y && monkey.vy >= 0) {
+            monkey.y = GROUND_Y - monkey.h;
+            monkey.vy = 0;
+            monkey.onGround = true;
+            monkey.canDoubleJump = true;
+            onSolidGround = true;
+          }
+          break;
+        }
+      }
+
+      // Fall off screen = death
+      if (monkey.y > CH + 50) {
+        monkey.dead = true;
+        monkey.deathTimer = 0;
+      }
+
+      // Run animation
+      if (monkey.onGround) {
+        monkey.runTimer++;
+        var animSpeed = Math.max(3, 8 - Math.floor(gameSpeed));
+        if (monkey.runTimer >= animSpeed) {
+          monkey.runTimer = 0;
+          monkey.runFrame++;
+        }
+      }
+
+      // Obstacle collision
+      for (var oi = 0; oi < obstacles.length; oi++) {
+        var obs = obstacles[oi];
+        // Shrink hitbox slightly for fairness
+        if (monkey.x + 2 < obs.x + obs.w - 2 &&
+            monkey.x + monkey.w - 2 > obs.x + 2 &&
+            monkey.y + 2 < obs.y + obs.h - 2 &&
+            monkey.y + monkey.h - 2 > obs.y + 2) {
+          monkey.dead = true;
+          monkey.deathTimer = 0;
+          break;
+        }
+      }
+
+      // Banana collection
+      for (var bi = 0; bi < bananas.length; bi++) {
+        var ban = bananas[bi];
+        if (ban.collected) continue;
+        if (monkey.x < ban.x + 12 &&
+            monkey.x + monkey.w > ban.x &&
+            monkey.y < ban.y + 13 &&
+            monkey.y + monkey.h > ban.y) {
+          ban.collected = true;
+          bananaCount++;
+        }
+      }
+    } else {
+      // Dead
+      monkey.deathTimer++;
+      monkey.vy += GRAVITY;
+      monkey.y += monkey.vy;
+      if (monkey.deathTimer > 60) {
+        // Save score
+        var finalScore = Math.floor(distance / 10) + bananaCount * 50;
+        if (finalScore > bestScore) {
+          bestScore = finalScore;
+          try { localStorage.setItem('bananaRunnerBest', String(bestScore)); } catch(e) {}
+        }
+        state = 'gameOver';
+      }
+    }
+
+    // --- Scroll ground segments ---
+    for (var si = 0; si < groundSegs.length; si++) {
+      groundSegs[si].x -= gameSpeed;
+    }
+    // Remove off-screen left
+    while (groundSegs.length > 0 && groundSegs[0].x + groundSegs[0].w < -20) {
+      groundSegs.shift();
+    }
+    // Spawn new segments on right
+    var lastSeg = groundSegs[groundSegs.length - 1];
+    while (lastSeg.x + lastSeg.w < CW + 200) {
+      spawnGroundSeg();
+      lastSeg = groundSegs[groundSegs.length - 1];
+    }
+
+    // --- Scroll obstacles ---
+    for (var oi2 = 0; oi2 < obstacles.length; oi2++) {
+      obstacles[oi2].x -= gameSpeed;
+    }
+    // Remove off-screen
+    while (obstacles.length > 0 && obstacles[0].x + obstacles[0].w < -40) {
+      obstacles.shift();
+    }
+    // Spawn obstacles
+    obstacleTimer += gameSpeed;
+    var spawnInterval = Math.max(minObstacleGap, 250 - distance * 0.15);
+    if (obstacleTimer > spawnInterval && !monkey.dead) {
+      // Check we're not spawning on a gap
+      var canSpawn = true;
+      for (var gci = 0; gci < groundSegs.length; gci++) {
+        var gSeg = groundSegs[gci];
+        if (gSeg.gap && gSeg.x > CW - 60 && gSeg.x < CW + 60) {
+          canSpawn = false;
+          break;
+        }
+      }
+      if (canSpawn) {
+        spawnObstacle();
+        obstacleTimer = 0;
+      }
+    }
+
+    // --- Scroll bananas ---
+    for (var bi2 = 0; bi2 < bananas.length; bi2++) {
+      bananas[bi2].x -= gameSpeed;
+      // Bob animation
+      bananas[bi2].y = bananas[bi2].baseY + Math.sin(frameCount * 0.08 + bananas[bi2].bobOffset) * 4;
+    }
+    // Remove off-screen
+    while (bananas.length > 0 && bananas[0].x < -30) {
+      bananas.shift();
+    }
+    // Spawn bananas
+    bananaTimer += gameSpeed;
+    if (bananaTimer > 100 + Math.random() * 80 && !monkey.dead) {
+      spawnBanana();
+      bananaTimer = 0;
+    }
+  }
+
+  // --- Main Loop ---
+  function loop() {
+    frameCount++;
+
+    switch (state) {
+      case 'title':
+        drawTitle();
+        if (justJumped()) {
+          startGame();
+        }
+        break;
+
+      case 'playing':
+        updatePlaying();
+        drawBackground();
+        drawGroundSegs();
+        for (var oi = 0; oi < obstacles.length; oi++) drawObstacleObj(obstacles[oi]);
+        for (var bi = 0; bi < bananas.length; bi++) drawBananaObj(bananas[bi]);
+        drawMonkeyChar();
+        drawHUD();
+        break;
+
+      case 'gameOver':
+        drawBackground();
+        drawGroundSegs();
+        for (var oi2 = 0; oi2 < obstacles.length; oi2++) drawObstacleObj(obstacles[oi2]);
+        for (var bi2 = 0; bi2 < bananas.length; bi2++) drawBananaObj(bananas[bi2]);
+        drawMonkeyChar();
+        drawGameOverScreen();
+        if (justJumped()) {
+          state = 'title';
+        }
+        break;
+    }
+
+    updateInput();
+    requestAnimationFrame(loop);
+  }
+
+  // Init ground for title screen
+  initGround();
+  loop();
+})();
+</script>
+
+</body>
+</html>
