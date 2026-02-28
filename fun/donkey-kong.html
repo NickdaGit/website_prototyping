@@ -2,45 +2,922 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Donkey Kong SVG Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Donkey Kong - Monkey Magic AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .game-logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+    }
+    .game-logo img {
+      width: 80px;
+      height: auto;
+    }
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      max-width: 100%;
+    }
+    canvas {
+      display: block;
+      border: 2px solid #333;
+      image-rendering: pixelated;
+      max-width: 100%;
+      height: auto;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      width: 480px;
+      max-width: 100%;
+      padding: 8px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #f0e040;
+      font-family: monospace;
+    }
+    .back-link {
+      margin-top: 16px;
+      padding: 8px 20px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .back-link:hover { background: #333; color: #fff; }
+    .touch-controls {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 16px 20px;
+      justify-content: space-between;
+      z-index: 30;
+      pointer-events: none;
+    }
+    .touch-dpad, .touch-actions {
+      display: flex;
+      gap: 6px;
+      pointer-events: auto;
+    }
+    .touch-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+    .touch-btn:active { background: rgba(255,255,255,0.35); }
+    .touch-dpad { flex-direction: row; align-items: flex-end; }
+    @media (max-width: 520px) {
+      .touch-controls { display: flex; }
+      .game-wrapper { padding: 5px; }
+      .hud { font-size: 12px; }
+      body { padding-bottom: 100px; }
+    }
+    @media (pointer: coarse) {
+      .touch-controls { display: flex; }
+      body { padding-bottom: 100px; }
+    }
+  </style>
 </head>
-<body style="background:#000; margin:0; display:flex; justify-content:center; align-items:center; height:100vh;">
-  <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-    <!-- Girder background -->
-    <rect x="0" y="400" width="512" height="112" fill="#8B4513" />
-    <rect x="0" y="300" width="512" height="100" fill="#8B4513" />
-    <rect x="0" y="200" width="512" height="100" fill="#8B4513" />
-    <!-- Ladders -->
-    <rect x="100" y="220" width="20" height="180" fill="#A0522D" />
-    <rect x="380" y="320" width="20" height="180" fill="#A0522D" />
-    <!-- Donkey Kong -->
-    <g transform="translate(180,180)">
-      <!-- Body -->
-      <ellipse cx="75" cy="80" rx="60" ry="90" fill="#8B4513" stroke="#4B2E1A" stroke-width="8"/>
-      <!-- Head -->
-      <circle cx="75" cy="30" r="45" fill="#8B4513" stroke="#4B2E1A" stroke-width="6"/>
-      <!-- Eyes -->
-      <circle cx="60" cy="25" r="12" fill="white"/>
-      <circle cx="90" cy="25" r="12" fill="white"/>
-      <circle cx="60" cy="25" r="6" fill="black"/>
-      <circle cx="90" cy="25" r="6" fill="black"/>
-      <!-- Mouth -->
-      <path d="M50 50 Q75 70 100 50" fill="none" stroke="#000" stroke-width="8"/>
-      <!-- Red shirt -->
-      <rect x="30" y="70" width="90" height="60" fill="#C41E3A" rx="10"/>
-      <!-- Blue overalls -->
-      <path d="M30 130 L90 130 L120 180 L30 180 Z" fill="#0000FF"/>
-      <!-- Arms (throwing barrel) -->
-      <ellipse cx="120" cy="100" rx="25" ry="50" fill="#8B4513" transform="rotate(-45 120 100)"/>
-      <!-- Legs -->
-      <ellipse cx="60" cy="180" rx="30" ry="40" fill="#8B4513"/>
-      <ellipse cx="90" cy="180" rx="30" ry="40" fill="#8B4513"/>
-    </g>
-    <!-- Barrel -->
-    <g transform="translate(280,100)">
-      <ellipse cx="0" cy="0" rx="40" ry="50" fill="#8B4513" stroke="#4B2E1A" stroke-width="6"/>
-      <rect x="-30" y="-20" width="60" height="40" fill="#8B4513" rx="10"/>
-    </g>
-  </svg>
+<body>
+
+<div class="game-logo">
+  <a href="/"><img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo"></a>
+</div>
+
+<div class="game-wrapper">
+  <div class="hud">
+    <span id="hud-score">SCORE: 0</span>
+    <span id="hud-level">LEVEL: 1</span>
+    <span id="hud-lives">LIVES: 3</span>
+  </div>
+  <canvas id="game" width="480" height="520"></canvas>
+  <a href="/fun.html" class="back-link">Back to Fun</a>
+</div>
+
+<div class="touch-controls">
+  <div class="touch-dpad">
+    <button class="touch-btn" id="btn-left">&#9664;</button>
+    <div style="display:flex; flex-direction:column; gap:6px;">
+      <button class="touch-btn" id="btn-up">&#9650;</button>
+      <button class="touch-btn" id="btn-down">&#9660;</button>
+    </div>
+    <button class="touch-btn" id="btn-right">&#9654;</button>
+  </div>
+  <div class="touch-actions">
+    <button class="touch-btn" id="btn-jump" style="width:80px; font-size:14px;">JUMP</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = 480, H = 520;
+  const S = 4; // pixel scale for pixel art
+
+  // Game state
+  let state = 'title'; // title, playing, levelComplete, gameOver
+  let score = 0;
+  let lives = 3;
+  let level = 1;
+  let levelTimer = 0;
+  let barrels = [];
+  let barrelTimer = 0;
+  let frameCount = 0;
+
+  // Input
+  const keys = {};
+  const touchState = { left: false, right: false, up: false, down: false, jump: false };
+
+  document.addEventListener('keydown', e => {
+    keys[e.code] = true;
+    if (['Space','ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.code)) e.preventDefault();
+  });
+  document.addEventListener('keyup', e => { keys[e.code] = false; });
+
+  // Touch controls
+  function bindTouch(id, key) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.addEventListener('touchstart', e => { e.preventDefault(); touchState[key] = true; }, { passive: false });
+    btn.addEventListener('touchend', e => { e.preventDefault(); touchState[key] = false; }, { passive: false });
+    btn.addEventListener('touchcancel', e => { touchState[key] = false; });
+  }
+  bindTouch('btn-left', 'left');
+  bindTouch('btn-right', 'right');
+  bindTouch('btn-up', 'up');
+  bindTouch('btn-down', 'down');
+  bindTouch('btn-jump', 'jump');
+
+  function isDown(action) {
+    switch (action) {
+      case 'left': return keys['ArrowLeft'] || keys['KeyA'] || touchState.left;
+      case 'right': return keys['ArrowRight'] || keys['KeyD'] || touchState.right;
+      case 'up': return keys['ArrowUp'] || keys['KeyW'] || touchState.up;
+      case 'down': return keys['ArrowDown'] || keys['KeyS'] || touchState.down;
+      case 'jump': return keys['Space'] || keys['ArrowUp'] || touchState.jump;
+      case 'start': return keys['Space'] || touchState.jump;
+    }
+    return false;
+  }
+  let prevStart = false;
+
+  // Platform layout
+  // Each platform: { x, y, w, slopeDir } slopeDir: 0=flat, 1=right-down, -1=left-down
+  const platforms = [
+    { x: 0, y: 490, w: 480, slope: 0 },     // Ground (P0)
+    { x: 20, y: 410, w: 440, slope: 1 },     // P1 slopes right-down
+    { x: 20, y: 330, w: 440, slope: -1 },    // P2 slopes left-down
+    { x: 20, y: 250, w: 440, slope: 1 },     // P3 slopes right-down
+    { x: 20, y: 170, w: 440, slope: -1 },    // P4 slopes left-down
+    { x: 60, y: 90, w: 200, slope: 0 },      // P5 top platform (DK + banana)
+  ];
+
+  const PLAT_H = 8;
+  const SLOPE_AMOUNT = 16; // total rise across platform width
+
+  function platYAt(p, px) {
+    if (p.slope === 0) return p.y;
+    const t = (px - p.x) / p.w;
+    return p.y + p.slope * SLOPE_AMOUNT * t;
+  }
+
+  // Ladders: { x, yTop, yBottom }
+  const ladders = [
+    { x: 420, yTop: 410, yBot: 490 },  // P0 -> P1 (right side)
+    { x: 60, yTop: 330, yBot: 416 },   // P1 -> P2 (left side)
+    { x: 400, yTop: 250, yBot: 336 },  // P2 -> P3 (right side)
+    { x: 80, yTop: 170, yBot: 256 },   // P3 -> P4 (left side)
+    { x: 200, yTop: 90, yBot: 176 },   // P4 -> P5 (center)
+  ];
+
+  const LADDER_W = 20;
+
+  // Player
+  let player = {};
+  function resetPlayer() {
+    player = {
+      x: 40, y: 490 - 24,
+      w: 16, h: 24,
+      vx: 0, vy: 0,
+      onGround: false,
+      onLadder: false,
+      climbing: false,
+      facing: 1, // 1=right, -1=left
+      walkFrame: 0,
+      walkTimer: 0,
+      jumpCooldown: 0,
+      dead: false,
+      deathTimer: 0,
+      currentPlatform: 0
+    };
+  }
+  resetPlayer();
+
+  // Gorilla (DK)
+  const dk = { x: 80, y: 58, animTimer: 0, animState: 0 }; // 0=idle, 1=chest pound, 2=throw
+
+  // Banana goal
+  const banana = { x: 230, y: 66 };
+
+  // --- Pixel Art Drawing Functions ---
+
+  function drawPixels(ox, oy, pixels, scale) {
+    const sc = scale || S;
+    for (let r = 0; r < pixels.length; r++) {
+      for (let c = 0; c < pixels[r].length; c++) {
+        const color = pixels[r][c];
+        if (color) {
+          ctx.fillStyle = color;
+          ctx.fillRect(Math.floor(ox + c * sc), Math.floor(oy + r * sc), sc, sc);
+        }
+      }
+    }
+  }
+
+  // Player sprite (16x24 at scale 1 = 4x6 pixel grid at S=4)
+  const B = '#2244cc'; // blue
+  const R = '#cc2222'; // red
+  const K = '#111111'; // black
+  const F = '#e8b878'; // flesh
+  const W = '#ffffff'; // white
+  const Y = '#f0e040'; // yellow (hat)
+
+  const playerSprite = [
+    [0, Y, Y, 0],
+    [F, F, F, F],
+    [0, K, K, 0],
+    [R, R, R, R],
+    [B, R, R, B],
+    [F, 0, 0, F],
+  ];
+
+  const playerSprite2 = [
+    [0, Y, Y, 0],
+    [F, F, F, F],
+    [0, K, K, 0],
+    [R, R, R, R],
+    [B, R, R, B],
+    [0, F, F, 0],
+  ];
+
+  const playerClimb1 = [
+    [0, Y, Y, 0],
+    [F, F, F, F],
+    [0, K, K, 0],
+    [B, R, R, 0],
+    [0, R, R, B],
+    [F, 0, 0, F],
+  ];
+
+  const playerClimb2 = [
+    [0, Y, Y, 0],
+    [F, F, F, F],
+    [0, K, K, 0],
+    [0, R, R, B],
+    [B, R, R, 0],
+    [0, F, F, 0],
+  ];
+
+  function drawPlayer() {
+    if (player.dead) {
+      // Death flash
+      if (Math.floor(player.deathTimer / 6) % 2 === 0) return;
+    }
+    let sprite;
+    if (player.climbing) {
+      sprite = (Math.floor(frameCount / 8) % 2 === 0) ? playerClimb1 : playerClimb2;
+    } else if (!player.onGround) {
+      sprite = playerSprite2;
+    } else {
+      sprite = (player.walkFrame % 2 === 0) ? playerSprite : playerSprite2;
+    }
+
+    ctx.save();
+    if (player.facing === -1) {
+      ctx.translate(Math.floor(player.x + player.w), 0);
+      ctx.scale(-1, 1);
+      drawPixels(0, Math.floor(player.y), sprite, S);
+    } else {
+      drawPixels(Math.floor(player.x), Math.floor(player.y), sprite, S);
+    }
+    ctx.restore();
+  }
+
+  // Gorilla sprite (8x8 grid at S=4 = 32x32 px)
+  const D = '#8B4513'; // dark brown
+  const L = '#c47a34'; // light brown
+  const E = '#ffffff'; // eyes
+  const P = '#ffcc00'; // mouth/yellow
+
+  const dkIdle = [
+    [0, 0, D, D, D, D, 0, 0],
+    [0, D, L, L, L, L, D, 0],
+    [0, D, E, K, K, E, D, 0],
+    [0, 0, D, P, P, D, 0, 0],
+    [D, D, D, D, D, D, D, D],
+    [D, L, D, D, D, D, L, D],
+    [0, 0, D, D, D, D, 0, 0],
+    [0, D, D, 0, 0, D, D, 0],
+  ];
+
+  const dkPound = [
+    [0, 0, D, D, D, D, 0, 0],
+    [0, D, L, L, L, L, D, 0],
+    [0, D, E, K, K, E, D, 0],
+    [0, 0, D, P, P, D, 0, 0],
+    [D, D, D, D, D, D, D, D],
+    [D, L, D, D, D, D, L, D],
+    [D, 0, D, D, D, D, 0, D],
+    [D, D, D, 0, 0, D, D, D],
+  ];
+
+  const dkThrow = [
+    [0, 0, D, D, D, D, 0, 0],
+    [0, D, L, L, L, L, D, 0],
+    [0, D, E, K, K, E, D, 0],
+    [0, 0, D, K, K, D, 0, 0],
+    [0, D, D, D, D, D, D, D],
+    [0, L, D, D, D, D, D, D],
+    [0, 0, D, D, D, D, 0, 0],
+    [0, D, D, 0, 0, D, D, 0],
+  ];
+
+  function drawDK() {
+    let sprite;
+    if (dk.animState === 1) sprite = dkPound;
+    else if (dk.animState === 2) sprite = dkThrow;
+    else sprite = dkIdle;
+    drawPixels(Math.floor(dk.x), Math.floor(dk.y), sprite, S);
+  }
+
+  // Barrel
+  const BR = '#8B4513';
+  const BD = '#5a2d0a';
+  const BL = '#c47a34';
+
+  function drawBarrel(b) {
+    const bx = Math.floor(b.x);
+    const by = Math.floor(b.y);
+    const r = 8;
+    // Barrel as rotating circle
+    ctx.fillStyle = BR;
+    ctx.beginPath();
+    ctx.arc(bx + r, by + r, r, 0, Math.PI * 2);
+    ctx.fill();
+    // Bands
+    ctx.strokeStyle = BD;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(bx + r, by + r, r, 0, Math.PI * 2);
+    ctx.stroke();
+    // Rotation marker
+    const angle = b.rot || 0;
+    ctx.fillStyle = BL;
+    ctx.beginPath();
+    ctx.arc(bx + r + Math.cos(angle) * 4, by + r + Math.sin(angle) * 4, 2, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Banana
+  function drawBanana() {
+    const bx = banana.x, by = banana.y;
+    ctx.fillStyle = '#ffcc00';
+    ctx.fillRect(bx, by, 4, 12);
+    ctx.fillRect(bx + 4, by - 2, 4, 12);
+    ctx.fillRect(bx + 8, by, 4, 8);
+    ctx.fillStyle = '#a08020';
+    ctx.fillRect(bx + 4, by + 10, 4, 4);
+  }
+
+  // Platforms
+  function drawPlatforms() {
+    platforms.forEach(p => {
+      for (let px = p.x; px < p.x + p.w; px += 4) {
+        const py = platYAt(p, px);
+        // Girder
+        ctx.fillStyle = '#cc4444';
+        ctx.fillRect(px, Math.floor(py), 4, PLAT_H);
+        // Rivet
+        if (px % 16 === 0) {
+          ctx.fillStyle = '#884444';
+          ctx.fillRect(px + 1, Math.floor(py) + 2, 2, 4);
+        }
+      }
+    });
+  }
+
+  // Ladders
+  function drawLadders() {
+    ladders.forEach(l => {
+      const h = l.yBot - l.yTop;
+      // Sides
+      ctx.fillStyle = '#66ccff';
+      ctx.fillRect(l.x, l.yTop, 3, h);
+      ctx.fillRect(l.x + LADDER_W - 3, l.yTop, 3, h);
+      // Rungs
+      ctx.fillStyle = '#4499cc';
+      for (let ry = l.yTop + 8; ry < l.yBot; ry += 12) {
+        ctx.fillRect(l.x + 3, ry, LADDER_W - 6, 3);
+      }
+    });
+  }
+
+  // --- Game Logic ---
+
+  function getPlatformUnder(x, y, w) {
+    for (let i = platforms.length - 1; i >= 0; i--) {
+      const p = platforms[i];
+      if (x + w > p.x && x < p.x + p.w) {
+        const py = platYAt(p, x + w / 2);
+        if (y + 24 >= py && y + 24 <= py + PLAT_H + 4) {
+          return i;
+        }
+      }
+    }
+    return -1;
+  }
+
+  function getLadderAt(x, y, w, h) {
+    for (let i = 0; i < ladders.length; i++) {
+      const l = ladders[i];
+      const cx = x + w / 2;
+      if (cx >= l.x && cx <= l.x + LADDER_W &&
+          y + h > l.yTop && y < l.yBot) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function spawnBarrel() {
+    barrels.push({
+      x: dk.x + 20,
+      y: dk.y + 28,
+      vx: 1.5 + level * 0.3,
+      vy: 0,
+      rot: 0,
+      onPlatform: -1,
+      falling: true,
+      scored: false
+    });
+  }
+
+  function updateBarrels() {
+    const gravity = 0.4;
+    const newBarrels = [];
+
+    for (const b of barrels) {
+      b.rot += b.vx * 0.15;
+
+      if (b.falling) {
+        b.vy += gravity;
+        b.y += b.vy;
+        b.x += b.vx * 0.3;
+
+        // Check landing on platform
+        for (let i = 0; i < platforms.length; i++) {
+          const p = platforms[i];
+          if (b.x + 16 > p.x && b.x < p.x + p.w) {
+            const py = platYAt(p, b.x + 8);
+            if (b.y + 16 >= py && b.y + 16 - b.vy <= py + 4) {
+              b.y = py - 16;
+              b.vy = 0;
+              b.falling = false;
+              b.onPlatform = i;
+              // Direction based on platform slope
+              if (p.slope === 1) b.vx = Math.abs(b.vx);
+              else if (p.slope === -1) b.vx = -Math.abs(b.vx);
+              else b.vx = b.vx > 0 ? Math.abs(b.vx) : -Math.abs(b.vx);
+              break;
+            }
+          }
+        }
+      } else {
+        // Rolling on platform
+        const p = platforms[b.onPlatform];
+        if (p) {
+          b.x += b.vx;
+          const py = platYAt(p, b.x + 8);
+          b.y = py - 16;
+
+          // Check if rolled off edge
+          if (b.x + 16 < p.x || b.x > p.x + p.w) {
+            b.falling = true;
+            b.vy = 0;
+            // Reverse direction for next platform
+            b.vx = -b.vx;
+          }
+        }
+      }
+
+      // Score for jumping over
+      if (!b.scored && !player.dead && !player.climbing) {
+        const bCenterX = b.x + 8;
+        const pCenterX = player.x + player.w / 2;
+        if (Math.abs(bCenterX - pCenterX) < 20 &&
+            player.y + player.h < b.y + 4 &&
+            !player.onGround) {
+          // No — let's check if player is above the barrel (jumped over)
+        }
+        // Simpler: barrel passed player's x while player is above it
+        if (b.onPlatform === player.currentPlatform && !b.scored) {
+          const passed = (b.vx > 0 && b.x > player.x + player.w && b.x - b.vx <= player.x + player.w) ||
+                         (b.vx < 0 && b.x + 16 < player.x && b.x + 16 - b.vx >= player.x);
+          if (passed && player.y + player.h <= b.y + 8) {
+            b.scored = true;
+            score += 100;
+          }
+        }
+      }
+
+      // Remove if off screen
+      if (b.y < H + 50 && b.y > -50) {
+        newBarrels.push(b);
+      }
+    }
+
+    barrels = newBarrels;
+  }
+
+  function checkBarrelCollision() {
+    if (player.dead) return false;
+    for (const b of barrels) {
+      if (player.x < b.x + 14 &&
+          player.x + player.w > b.x + 2 &&
+          player.y < b.y + 14 &&
+          player.y + player.h > b.y + 2) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function checkBananaCollision() {
+    return (player.x < banana.x + 16 &&
+            player.x + player.w > banana.x &&
+            player.y < banana.y + 16 &&
+            player.y + player.h > banana.y);
+  }
+
+  function updatePlayer() {
+    if (player.dead) {
+      player.deathTimer++;
+      if (player.deathTimer > 60) {
+        lives--;
+        if (lives <= 0) {
+          state = 'gameOver';
+        } else {
+          resetPlayer();
+          barrels = [];
+        }
+      }
+      return;
+    }
+
+    const speed = 2.5;
+    const jumpPower = -6.5;
+    const gravity = 0.35;
+
+    // Ladder check
+    const ladderIdx = getLadderAt(player.x, player.y, player.w, player.h);
+
+    if (player.climbing) {
+      player.vx = 0;
+      player.vy = 0;
+      if (isDown('up')) {
+        player.y -= 2;
+      }
+      if (isDown('down')) {
+        player.y += 2;
+      }
+      if (isDown('left') || isDown('right')) {
+        player.climbing = false;
+      }
+
+      // Check if reached top or bottom of ladder
+      if (ladderIdx >= 0) {
+        const l = ladders[ladderIdx];
+        if (player.y + player.h < l.yTop + 4) {
+          player.climbing = false;
+          player.y = l.yTop - player.h;
+          player.onGround = true;
+        }
+        if (player.y + player.h > l.yBot) {
+          player.climbing = false;
+        }
+      } else {
+        player.climbing = false;
+      }
+
+      if (isDown('jump') && player.jumpCooldown <= 0) {
+        player.climbing = false;
+        player.vy = jumpPower;
+        player.jumpCooldown = 15;
+      }
+      return;
+    }
+
+    // Start climbing
+    if (ladderIdx >= 0 && (isDown('up') || isDown('down'))) {
+      const l = ladders[ladderIdx];
+      player.climbing = true;
+      player.x = l.x + (LADDER_W - player.w) / 2;
+      player.onGround = false;
+      return;
+    }
+
+    // Horizontal movement
+    player.vx = 0;
+    if (isDown('left')) {
+      player.vx = -speed;
+      player.facing = -1;
+    }
+    if (isDown('right')) {
+      player.vx = speed;
+      player.facing = 1;
+    }
+
+    // Walk animation
+    if (player.vx !== 0 && player.onGround) {
+      player.walkTimer++;
+      if (player.walkTimer > 6) {
+        player.walkTimer = 0;
+        player.walkFrame++;
+      }
+    } else {
+      player.walkTimer = 0;
+    }
+
+    // Jump
+    if (player.jumpCooldown > 0) player.jumpCooldown--;
+    if (isDown('jump') && player.onGround && player.jumpCooldown <= 0) {
+      player.vy = jumpPower;
+      player.onGround = false;
+      player.jumpCooldown = 15;
+    }
+
+    // Apply gravity
+    player.vy += gravity;
+    player.x += player.vx;
+    player.y += player.vy;
+
+    // Clamp to canvas
+    if (player.x < 0) player.x = 0;
+    if (player.x + player.w > W) player.x = W - player.w;
+
+    // Platform collision
+    player.onGround = false;
+    for (let i = 0; i < platforms.length; i++) {
+      const p = platforms[i];
+      if (player.x + player.w > p.x && player.x < p.x + p.w) {
+        const py = platYAt(p, player.x + player.w / 2);
+        if (player.y + player.h >= py && player.y + player.h <= py + PLAT_H + 6 && player.vy >= 0) {
+          player.y = py - player.h;
+          player.vy = 0;
+          player.onGround = true;
+          player.currentPlatform = i;
+        }
+      }
+    }
+
+    // Fall off screen
+    if (player.y > H + 50) {
+      player.dead = true;
+      player.deathTimer = 0;
+    }
+
+    // Barrel collision
+    if (checkBarrelCollision()) {
+      player.dead = true;
+      player.deathTimer = 0;
+    }
+
+    // Banana collection
+    if (checkBananaCollision()) {
+      score += 500 + level * 200;
+      state = 'levelComplete';
+      levelTimer = 0;
+    }
+  }
+
+  function updateDK() {
+    dk.animTimer++;
+    const interval = Math.max(60, 120 - level * 15);
+
+    if (dk.animTimer % interval === interval - 20) {
+      dk.animState = 2; // throw pose
+    } else if (dk.animTimer % interval === 0) {
+      spawnBarrel();
+      dk.animState = 0;
+    } else if (dk.animTimer % 200 > 150 && dk.animTimer % 200 < 180) {
+      dk.animState = 1; // chest pound
+    } else if (dk.animState === 2 && dk.animTimer % interval > 5) {
+      dk.animState = 0;
+    }
+  }
+
+  function updateHUD() {
+    document.getElementById('hud-score').textContent = 'SCORE: ' + score;
+    document.getElementById('hud-level').textContent = 'LEVEL: ' + level;
+    document.getElementById('hud-lives').textContent = 'LIVES: ' + lives;
+  }
+
+  // --- Screens ---
+
+  function drawTitle() {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+
+    // Draw a small DK in center
+    drawPixels(192, 100, dkIdle, 6);
+
+    ctx.fillStyle = '#cc2222';
+    ctx.font = 'bold 36px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('DONKEY KONG', W / 2, 300);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = '16px monospace';
+    ctx.fillText('MONKEY MAGIC AI EDITION', W / 2, 330);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px monospace';
+
+    const blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) {
+      ctx.fillText('PRESS SPACE TO START', W / 2, 400);
+    }
+
+    ctx.fillStyle = '#888';
+    ctx.font = '11px monospace';
+    ctx.fillText('ARROWS: MOVE / CLIMB    SPACE: JUMP', W / 2, 460);
+    ctx.fillText('REACH THE BANANA. DODGE THE BARRELS.', W / 2, 480);
+  }
+
+  function drawGameOver() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = '#cc2222';
+    ctx.font = 'bold 40px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', W / 2, 200);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = '20px monospace';
+    ctx.fillText('FINAL SCORE: ' + score, W / 2, 260);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px monospace';
+    const blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) {
+      ctx.fillText('PRESS SPACE TO RESTART', W / 2, 340);
+    }
+  }
+
+  function drawLevelComplete() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = 'bold 32px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('LEVEL ' + level + ' COMPLETE!', W / 2, 220);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '18px monospace';
+    ctx.fillText('SCORE: ' + score, W / 2, 270);
+
+    if (levelTimer > 60) {
+      ctx.font = '14px monospace';
+      const blink = Math.floor(frameCount / 30) % 2 === 0;
+      if (blink) {
+        ctx.fillText('PRESS SPACE FOR NEXT LEVEL', W / 2, 340);
+      }
+    }
+  }
+
+  function drawGame() {
+    // Background
+    ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, W, H);
+
+    drawPlatforms();
+    drawLadders();
+    drawBanana();
+    drawDK();
+
+    for (const b of barrels) {
+      drawBarrel(b);
+    }
+
+    drawPlayer();
+  }
+
+  // --- Main Loop ---
+
+  function startGame() {
+    score = 0;
+    lives = 3;
+    level = 1;
+    barrels = [];
+    barrelTimer = 0;
+    dk.animTimer = 0;
+    dk.animState = 0;
+    resetPlayer();
+    state = 'playing';
+  }
+
+  function nextLevel() {
+    level++;
+    barrels = [];
+    barrelTimer = 0;
+    dk.animTimer = 0;
+    dk.animState = 0;
+    resetPlayer();
+    state = 'playing';
+  }
+
+  function loop() {
+    frameCount++;
+
+    const startPressed = isDown('start') && !prevStart;
+    prevStart = isDown('start');
+
+    switch (state) {
+      case 'title':
+        drawTitle();
+        if (startPressed) startGame();
+        break;
+
+      case 'playing':
+        updatePlayer();
+        if (state === 'playing') {
+          updateDK();
+          updateBarrels();
+        }
+        drawGame();
+        updateHUD();
+        break;
+
+      case 'levelComplete':
+        drawGame();
+        drawLevelComplete();
+        levelTimer++;
+        if (levelTimer > 60 && startPressed) {
+          nextLevel();
+        }
+        break;
+
+      case 'gameOver':
+        drawGame();
+        drawGameOver();
+        if (startPressed) {
+          state = 'title';
+        }
+        break;
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+})();
+</script>
+
 </body>
 </html>

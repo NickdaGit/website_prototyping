@@ -1,1 +1,4 @@
 markdown: kramdown
+exclude:
+  - fun/jokes
+  - fun/wisdoms

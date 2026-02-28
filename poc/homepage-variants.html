@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage Variants - POC - Monkey Magic AI</title>
+  <link rel="stylesheet" href="/poc/poc-variants.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="poc-logo-overlay">
+    <a href="/">
+      <img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo">
+    </a>
+  </div>
+
+  <!-- Hero (gradient instead of video to keep POC lightweight) -->
+  <div class="poc-hero">
+    <div class="poc-hero-text">
+      <h1>Monkey Magic AI</h1>
+      <p>Where monkeys code, dream and sometimes steal bananas</p>
+    </div>
+  </div>
+
+  <!-- Variant Switcher -->
+  <div class="variant-switcher">
+    <button class="variant-btn active" data-variant="original">Original</button>
+    <button class="variant-btn" data-variant="warm">Warm</button>
+    <button class="variant-btn" data-variant="cool">Cool</button>
+  </div>
+
+  <!-- Section Cards (mirrors homepage layout) -->
+  <section class="poc-section-cards">
+    <div class="container">
+      <div class="poc-section-card">
+        <h3>About</h3>
+        <p>Monkey Magic AI</p>
+      </div>
+      <div class="poc-section-card">
+        <h3>Knowledge</h3>
+        <p>For curious little monkeys</p>
+      </div>
+      <div class="poc-section-card">
+        <h3>Fun</h3>
+        <p>For cheeky little monkeys</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="poc-footer">
+    <p>Back to <a href="/poc/poc.html">Proof of Concepts</a></p>
+  </footer>
+
+  <script>
+    (function() {
+      const buttons = document.querySelectorAll('.variant-btn');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update active button
+          buttons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          // Remove all variant classes from body
+          document.body.classList.remove('variant-warm', 'variant-cool');
+
+          // Apply selected variant
+          const variant = btn.getAttribute('data-variant');
+          if (variant !== 'original') {
+            document.body.classList.add('variant-' + variant);
+          }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
