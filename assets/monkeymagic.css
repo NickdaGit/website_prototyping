@@ -243,6 +243,10 @@ img {
   margin: 0.5rem 0 0;
 }
 
+.founder .card img {
+  height: 500px;
+}
+
 /* Search Container */
 .search-container {
   max-width: 700px;
@@ -459,6 +463,10 @@ footer a:hover {
   }
 
   .bio-header img {
+    height: 250px;
+  }
+
+  .founder .card img {
     height: 250px;
   }
 
