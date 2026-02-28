@@ -1,0 +1,422 @@
+[
+  {
+    "file": "/fun/jokes/quick-hits/001.md",
+    "category": "quick-hits",
+    "title": "Gutless Skeletons",
+    "tags": ["skeleton", "pun", "classic", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/002.md",
+    "category": "quick-hits",
+    "title": "Trusty Atoms",
+    "tags": ["science", "pun", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/003.md",
+    "category": "quick-hits",
+    "title": "Broken Pencils",
+    "tags": ["pun", "wordplay", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/004.md",
+    "category": "quick-hits",
+    "title": "Seafood Diet",
+    "tags": ["food", "pun", "one-liner", "classic"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/005.md",
+    "category": "quick-hits",
+    "title": "Time Flies",
+    "tags": ["time", "wordplay", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/006.md",
+    "category": "quick-hits",
+    "title": "Elevator Jokes",
+    "tags": ["pun", "wordplay", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/007.md",
+    "category": "quick-hits",
+    "title": "Kleptomaniac Puns",
+    "tags": ["pun", "wordplay", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/008.md",
+    "category": "quick-hits",
+    "title": "Parallel Lines",
+    "tags": ["math", "pun", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/009.md",
+    "category": "quick-hits",
+    "title": "Scarecrow Promotion",
+    "tags": ["pun", "wordplay", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/010.md",
+    "category": "quick-hits",
+    "title": "Ceiling Fan",
+    "tags": ["pun", "wordplay", "one-liner"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/001.md",
+    "category": "dad-jokes",
+    "title": "Eyebrow Surprise",
+    "tags": ["marriage", "appearance", "classic", "dad-joke"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/002.md",
+    "category": "dad-jokes",
+    "title": "Calendar's Days Are Numbered",
+    "tags": ["calendar", "pun", "dad-joke"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/003.md",
+    "category": "dad-jokes",
+    "title": "Shoe Factory Theft",
+    "tags": ["shoes", "pun", "dad-joke"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/004.md",
+    "category": "dad-jokes",
+    "title": "Nosy Pepper",
+    "tags": ["food", "pun", "dad-joke", "vegetables"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/005.md",
+    "category": "dad-jokes",
+    "title": "Kidnapping at School",
+    "tags": ["school", "pun", "dad-joke", "kids"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/006.md",
+    "category": "dad-jokes",
+    "title": "Left Hand Store",
+    "tags": ["shopping", "pun", "dad-joke", "wordplay"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/007.md",
+    "category": "dad-jokes",
+    "title": "Construction Work",
+    "tags": ["construction", "pun", "dad-joke", "work"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/008.md",
+    "category": "dad-jokes",
+    "title": "Cheese Pun",
+    "tags": ["cheese", "food", "pun", "dad-joke"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/009.md",
+    "category": "dad-jokes",
+    "title": "Invisible Man Appointment",
+    "tags": ["doctor", "pun", "dad-joke", "wordplay"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/010.md",
+    "category": "dad-jokes",
+    "title": "Paper Joke",
+    "tags": ["paper", "pun", "dad-joke", "meta"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/001.md",
+    "category": "story-jokes",
+    "title": "The Classic Bar Entrance",
+    "tags": ["bar", "priest", "rabbi", "classic", "walk-in"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/002.md",
+    "category": "story-jokes",
+    "title": "The Talking Dog",
+    "tags": ["dog", "bar", "animals", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/003.md",
+    "category": "story-jokes",
+    "title": "The Genie's Fine Print",
+    "tags": ["genie", "wishes", "story", "twist"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/004.md",
+    "category": "story-jokes",
+    "title": "Three Engineers in a Car",
+    "tags": ["engineers", "car", "problem-solving", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/005.md",
+    "category": "story-jokes",
+    "title": "The Penguin and the Mechanic",
+    "tags": ["penguin", "ice-cream", "mechanic", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/006.md",
+    "category": "story-jokes",
+    "title": "Two Muffins in an Oven",
+    "tags": ["muffins", "oven", "food", "story", "short"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/007.md",
+    "category": "story-jokes",
+    "title": "The Lost Hikers",
+    "tags": ["hiking", "lost", "logic", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/008.md",
+    "category": "story-jokes",
+    "title": "The Snail's Revenge",
+    "tags": ["snail", "patience", "revenge", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/009.md",
+    "category": "story-jokes",
+    "title": "The Pirate's Steering Wheel",
+    "tags": ["pirate", "bar", "pun", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/010.md",
+    "category": "story-jokes",
+    "title": "The Hotel Towels",
+    "tags": ["hotel", "travel", "marriage", "story"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/001.md",
+    "category": "tech-ai",
+    "title": "AI Therapy Session",
+    "tags": ["AI", "therapy", "dependencies", "programming"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/002.md",
+    "category": "tech-ai",
+    "title": "Git Relationship",
+    "tags": ["git", "programming", "relationships", "version-control"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/003.md",
+    "category": "tech-ai",
+    "title": "Machine Learning Diet",
+    "tags": ["AI", "machine-learning", "data", "food"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/004.md",
+    "category": "tech-ai",
+    "title": "Cloud Computing Weather",
+    "tags": ["cloud", "computing", "weather", "IT"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/005.md",
+    "category": "tech-ai",
+    "title": "SQL Query at the Bar",
+    "tags": ["SQL", "database", "bar", "programming"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/006.md",
+    "category": "tech-ai",
+    "title": "ChatGPT's Existential Crisis",
+    "tags": ["ChatGPT", "AI", "existential", "hallucination"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/007.md",
+    "category": "tech-ai",
+    "title": "JavaScript Equality",
+    "tags": ["JavaScript", "programming", "equality", "bugs"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/008.md",
+    "category": "tech-ai",
+    "title": "The Recursive Joke",
+    "tags": ["recursion", "programming", "meta", "infinite-loop"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/009.md",
+    "category": "tech-ai",
+    "title": "The AI Job Interview",
+    "tags": ["AI", "job", "interview", "automation"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/010.md",
+    "category": "tech-ai",
+    "title": "The Password Dilemma",
+    "tags": ["password", "security", "programming", "frustration"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/001.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey AI Acceleration",
+    "tags": ["monkey", "AI", "bananas", "speed"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/002.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey's Startup",
+    "tags": ["monkey", "startup", "tech", "bananas", "business"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/003.md",
+    "category": "monkey-magic-specials",
+    "title": "The Monkey Programmer",
+    "tags": ["monkey", "programming", "code", "banana"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/004.md",
+    "category": "monkey-magic-specials",
+    "title": "MonkeyMagic.ai Customer Support",
+    "tags": ["monkey", "AI", "customer-support", "chatbot"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/005.md",
+    "category": "monkey-magic-specials",
+    "title": "Infinite Monkey Theorem Updated",
+    "tags": ["monkey", "typewriter", "AI", "shakespeare", "classic"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/006.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey Magic Cloud",
+    "tags": ["monkey", "cloud", "computing", "banana", "infrastructure"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/007.md",
+    "category": "monkey-magic-specials",
+    "title": "The Monkey Code Review",
+    "tags": ["monkey", "code-review", "programming", "banana"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/008.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey vs. AI Chess Match",
+    "tags": ["monkey", "AI", "chess", "competition"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/009.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey's Resume",
+    "tags": ["monkey", "resume", "hiring", "AI", "job"]
+  },
+  {
+    "file": "/fun/jokes/monkey-magic-specials/010.md",
+    "category": "monkey-magic-specials",
+    "title": "Banana Blockchain",
+    "tags": ["monkey", "blockchain", "banana", "crypto", "AI"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/001.md",
+    "category": "dark-humor",
+    "title": "Narcissist's Reflection",
+    "tags": ["therapy", "narcissism", "mirror", "dark"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/002.md",
+    "category": "dark-humor",
+    "title": "Optimist's Half Glass",
+    "tags": ["optimist", "pessimist", "perspective", "dark"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/003.md",
+    "category": "dark-humor",
+    "title": "Procrastinator's Will",
+    "tags": ["procrastination", "death", "will", "dark"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/004.md",
+    "category": "dark-humor",
+    "title": "Haunted House Review",
+    "tags": ["haunted", "house", "real-estate", "dark", "ghosts"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/005.md",
+    "category": "dark-humor",
+    "title": "Dentist's Favorite Time",
+    "tags": ["dentist", "time", "pun", "dark"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/006.md",
+    "category": "dark-humor",
+    "title": "Life's Terms of Service",
+    "tags": ["life", "terms-of-service", "dark", "existential"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/007.md",
+    "category": "dark-humor",
+    "title": "Unreliable Narrator",
+    "tags": ["honesty", "trust", "dark", "meta"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/008.md",
+    "category": "dark-humor",
+    "title": "The Man Who Knew Too Little",
+    "tags": ["ignorance", "knowledge", "dark", "bliss"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/009.md",
+    "category": "dark-humor",
+    "title": "Autocorrect Eulogy",
+    "tags": ["autocorrect", "funeral", "technology", "dark"]
+  },
+  {
+    "file": "/fun/jokes/dark-humor/010.md",
+    "category": "dark-humor",
+    "title": "DIY Therapist",
+    "tags": ["therapy", "self-help", "dark", "budget"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/001.md",
+    "category": "absurd-surreal",
+    "title": "Man Becomes Duck",
+    "tags": ["duck", "bar", "absurd", "surreal", "short"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/002.md",
+    "category": "absurd-surreal",
+    "title": "The Sentient Stapler",
+    "tags": ["stapler", "office", "sentient", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/003.md",
+    "category": "absurd-surreal",
+    "title": "The Color Argument",
+    "tags": ["colors", "argument", "absurd", "surreal", "philosophy"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/004.md",
+    "category": "absurd-surreal",
+    "title": "Backwards Clock",
+    "tags": ["clock", "time", "backwards", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/005.md",
+    "category": "absurd-surreal",
+    "title": "The Polite Tornado",
+    "tags": ["tornado", "polite", "weather", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/006.md",
+    "category": "absurd-surreal",
+    "title": "The Existential Sandwich",
+    "tags": ["sandwich", "existential", "food", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/007.md",
+    "category": "absurd-surreal",
+    "title": "Gravity's Day Off",
+    "tags": ["gravity", "physics", "day-off", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/008.md",
+    "category": "absurd-surreal",
+    "title": "The Last Number",
+    "tags": ["numbers", "math", "infinity", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/009.md",
+    "category": "absurd-surreal",
+    "title": "The Meeting of Socks",
+    "tags": ["socks", "laundry", "meeting", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/010.md",
+    "category": "absurd-surreal",
+    "title": "The Chair's Promotion",
+    "tags": ["chair", "furniture", "promotion", "absurd", "surreal"]
+  }
+]

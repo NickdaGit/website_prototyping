@@ -402,9 +402,14 @@ footer a:hover {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .logo-overlay {
+    top: 8px;
+    left: 5px;
+  }
+
   .logo {
-    width: 20vw;
-    min-width: 110px;
+    width: 13vw;
+    min-width: 70px;
   }
 
   .hero {

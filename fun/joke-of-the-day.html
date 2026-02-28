@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joke of the Day - Monkey Magic AI</title>
+  <link rel="stylesheet" href="/assets/monkeymagic.css">
+  <link rel="stylesheet" href="/assets/daily-pick.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Floating logo -->
+  <div class="logo-overlay">
+    <a href="/">
+      <img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo" class="logo">
+    </a>
+  </div>
+
+  <div style="height: 80px;"></div>
+
+  <div class="daily-header">
+    <h1>Joke of the Day</h1>
+    <p>Three fresh picks, served daily. Tap a card to reveal the punchline.</p>
+  </div>
+
+  <div class="daily-cards" id="daily-cards"></div>
+
+  <div class="carousel-dots" id="carousel-dots"></div>
+  <div class="carousel-nav">
+    <button data-dir="prev">Prev</button>
+    <button data-dir="next">Next</button>
+  </div>
+
+  <div class="daily-back">
+    <a href="/fun.html">Back to Fun</a>
+  </div>
+
+  <footer>
+    <p>Back to <a href="/">home</a></p>
+  </footer>
+
+  <script src="/assets/daily-pick.js"></script>
+  <script>
+    DailyPick.init({
+      manifestUrl: '/fun/jokes/jokes-manifest.json',
+      containerId: 'daily-cards',
+      dotsId: 'carousel-dots',
+      count: 3,
+      mode: 'joke'
+    });
+  </script>
+
+</body>
+</html>

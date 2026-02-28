@@ -1,0 +1,362 @@
+[
+  {
+    "file": "/fun/wisdoms/life-hacks/001.md",
+    "category": "life-hacks",
+    "title": "Start Messy",
+    "tags": ["motivation", "creativity", "action"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/002.md",
+    "category": "life-hacks",
+    "title": "The Two-Minute Rule",
+    "tags": ["productivity", "habits", "time-management"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/003.md",
+    "category": "life-hacks",
+    "title": "Sleep On It",
+    "tags": ["decisions", "rest", "clarity"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/004.md",
+    "category": "life-hacks",
+    "title": "Batch the Boring",
+    "tags": ["productivity", "focus", "efficiency"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/005.md",
+    "category": "life-hacks",
+    "title": "Write It Down",
+    "tags": ["organization", "memory", "clarity"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/006.md",
+    "category": "life-hacks",
+    "title": "The 80% Door",
+    "tags": ["perfectionism", "progress", "action"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/007.md",
+    "category": "life-hacks",
+    "title": "Future You Is Watching",
+    "tags": ["discipline", "long-term-thinking", "self-care"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/008.md",
+    "category": "life-hacks",
+    "title": "Shrink the Ask",
+    "tags": ["motivation", "habits", "starting"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/009.md",
+    "category": "life-hacks",
+    "title": "One Tab at a Time",
+    "tags": ["focus", "simplicity", "digital-wellness"]
+  },
+  {
+    "file": "/fun/wisdoms/life-hacks/010.md",
+    "category": "life-hacks",
+    "title": "Rename the Struggle",
+    "tags": ["mindset", "resilience", "growth"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/001.md",
+    "category": "tech-wisdom",
+    "title": "Readable Beats Fast",
+    "tags": ["code-quality", "readability", "maintainability"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/002.md",
+    "category": "tech-wisdom",
+    "title": "Delete More Code",
+    "tags": ["refactoring", "simplicity", "maintenance"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/003.md",
+    "category": "tech-wisdom",
+    "title": "Naming Is Design",
+    "tags": ["naming", "design", "communication"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/004.md",
+    "category": "tech-wisdom",
+    "title": "Ship the Prototype",
+    "tags": ["iteration", "feedback", "shipping"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/005.md",
+    "category": "tech-wisdom",
+    "title": "Comments Are Apologies",
+    "tags": ["comments", "code-quality", "self-documenting"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/006.md",
+    "category": "tech-wisdom",
+    "title": "Debug Your Assumptions",
+    "tags": ["debugging", "assumptions", "critical-thinking"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/007.md",
+    "category": "tech-wisdom",
+    "title": "Automate the Third Time",
+    "tags": ["automation", "efficiency", "judgment"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/008.md",
+    "category": "tech-wisdom",
+    "title": "Version Control Your Ego",
+    "tags": ["code-review", "teamwork", "humility"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/009.md",
+    "category": "tech-wisdom",
+    "title": "Premature Abstraction",
+    "tags": ["abstraction", "complexity", "pragmatism"]
+  },
+  {
+    "file": "/fun/wisdoms/tech-wisdom/010.md",
+    "category": "tech-wisdom",
+    "title": "Tests Are Love Letters",
+    "tags": ["testing", "maintenance", "reliability"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/001.md",
+    "category": "monkey-magic-moments",
+    "title": "Banana Bug Repellent",
+    "tags": ["humor", "debugging", "bananas"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/002.md",
+    "category": "monkey-magic-moments",
+    "title": "Monkey See, Monkey Deploy",
+    "tags": ["humor", "devops", "learning"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/003.md",
+    "category": "monkey-magic-moments",
+    "title": "Infinite Monkeys, Finite Patience",
+    "tags": ["humor", "problem-solving", "patience"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/004.md",
+    "category": "monkey-magic-moments",
+    "title": "The Banana Peel Principle",
+    "tags": ["humor", "failure", "resilience"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/005.md",
+    "category": "monkey-magic-moments",
+    "title": "Swing First, Ask Later",
+    "tags": ["humor", "action", "risk"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/006.md",
+    "category": "monkey-magic-moments",
+    "title": "AI Trained on Bananas",
+    "tags": ["humor", "AI", "bananas"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/007.md",
+    "category": "monkey-magic-moments",
+    "title": "The Jungle Standup",
+    "tags": ["humor", "meetings", "agile"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/008.md",
+    "category": "monkey-magic-moments",
+    "title": "Banana-Driven Development",
+    "tags": ["humor", "motivation", "rewards"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/009.md",
+    "category": "monkey-magic-moments",
+    "title": "The Cloud Is Just Someone Else's Tree",
+    "tags": ["humor", "cloud", "infrastructure"]
+  },
+  {
+    "file": "/fun/wisdoms/monkey-magic-moments/010.md",
+    "category": "monkey-magic-moments",
+    "title": "Evolution of a Developer",
+    "tags": ["humor", "career", "evolution"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/001.md",
+    "category": "quiet-truths",
+    "title": "Stop Talking, Start Listening",
+    "tags": ["listening", "patience", "awareness"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/002.md",
+    "category": "quiet-truths",
+    "title": "The Weight of Almost",
+    "tags": ["completion", "letting-go", "peace"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/003.md",
+    "category": "quiet-truths",
+    "title": "Slow Is Smooth",
+    "tags": ["patience", "quality", "presence"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/004.md",
+    "category": "quiet-truths",
+    "title": "Small Kindness Compounds",
+    "tags": ["kindness", "impact", "consistency"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/005.md",
+    "category": "quiet-truths",
+    "title": "The Space Between",
+    "tags": ["stillness", "self-awareness", "reflection"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/006.md",
+    "category": "quiet-truths",
+    "title": "Consistency Over Intensity",
+    "tags": ["consistency", "discipline", "habits"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/007.md",
+    "category": "quiet-truths",
+    "title": "Unlearning Is Growth",
+    "tags": ["growth", "change", "humility"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/008.md",
+    "category": "quiet-truths",
+    "title": "Roots Before Branches",
+    "tags": ["foundations", "patience", "depth"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/009.md",
+    "category": "quiet-truths",
+    "title": "What You Protect",
+    "tags": ["values", "priorities", "self-knowledge"]
+  },
+  {
+    "file": "/fun/wisdoms/quiet-truths/010.md",
+    "category": "quiet-truths",
+    "title": "Enough Is a Skill",
+    "tags": ["contentment", "gratitude", "mindfulness"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/001.md",
+    "category": "witty-one-liners",
+    "title": "The Success Formula",
+    "tags": ["humor", "success", "honesty"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/002.md",
+    "category": "witty-one-liners",
+    "title": "Experience Defined",
+    "tags": ["humor", "experience", "mistakes"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/003.md",
+    "category": "witty-one-liners",
+    "title": "Adulting Update",
+    "tags": ["humor", "adulting", "reality"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/004.md",
+    "category": "witty-one-liners",
+    "title": "Comfort Zone Real Estate",
+    "tags": ["humor", "comfort-zone", "growth"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/005.md",
+    "category": "witty-one-liners",
+    "title": "Confident Confusion",
+    "tags": ["humor", "confidence", "imposter-syndrome"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/006.md",
+    "category": "witty-one-liners",
+    "title": "Deadline Physics",
+    "tags": ["humor", "deadlines", "productivity"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/007.md",
+    "category": "witty-one-liners",
+    "title": "Overthinking Olympics",
+    "tags": ["humor", "overthinking", "anxiety"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/008.md",
+    "category": "witty-one-liners",
+    "title": "WiFi Hierarchy",
+    "tags": ["humor", "technology", "trust"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/009.md",
+    "category": "witty-one-liners",
+    "title": "Morning Person Myth",
+    "tags": ["humor", "mornings", "productivity"]
+  },
+  {
+    "file": "/fun/wisdoms/witty-one-liners/010.md",
+    "category": "witty-one-liners",
+    "title": "Plan B Specialist",
+    "tags": ["humor", "adaptability", "plans"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/001.md",
+    "category": "big-picture",
+    "title": "Better Questions",
+    "tags": ["philosophy", "curiosity", "perspective"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/002.md",
+    "category": "big-picture",
+    "title": "Temporary Everything",
+    "tags": ["impermanence", "meaning", "perspective"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/003.md",
+    "category": "big-picture",
+    "title": "Pale Blue Pixel",
+    "tags": ["perspective", "humility", "cosmos"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/004.md",
+    "category": "big-picture",
+    "title": "The Map and the Walk",
+    "tags": ["planning", "experience", "journey"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/005.md",
+    "category": "big-picture",
+    "title": "Progress Isn't Linear",
+    "tags": ["progress", "growth", "patience"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/006.md",
+    "category": "big-picture",
+    "title": "Ripple Blindness",
+    "tags": ["impact", "interconnection", "legacy"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/007.md",
+    "category": "big-picture",
+    "title": "Certainty Is Fragile",
+    "tags": ["certainty", "doubt", "wisdom"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/008.md",
+    "category": "big-picture",
+    "title": "Entropy and Effort",
+    "tags": ["entropy", "effort", "persistence"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/009.md",
+    "category": "big-picture",
+    "title": "Finite Games, Infinite Play",
+    "tags": ["purpose", "perspective", "meaning"]
+  },
+  {
+    "file": "/fun/wisdoms/big-picture/010.md",
+    "category": "big-picture",
+    "title": "The Long Now",
+    "tags": ["long-term", "legacy", "time"]
+  }
+]
