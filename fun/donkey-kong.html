@@ -492,6 +492,7 @@
       vy: 0,
       rot: 0,
       onPlatform: -1,
+      lastPlatform: -1,
       falling: true,
       scored: false
     });
@@ -511,6 +512,7 @@
 
         // Check landing on platform
         for (let i = 0; i < platforms.length; i++) {
+          if (i === b.lastPlatform) continue;
           const p = platforms[i];
           if (b.x + 16 > p.x && b.x < p.x + p.w) {
             const py = platYAt(p, b.x + 8);
@@ -519,6 +521,7 @@
               b.vy = 0;
               b.falling = false;
               b.onPlatform = i;
+              b.lastPlatform = -1;
               // Direction based on platform slope
               if (p.slope === 1) b.vx = Math.abs(b.vx);
               else if (p.slope === -1) b.vx = -Math.abs(b.vx);
@@ -537,6 +540,7 @@
 
           // Check if rolled off edge
           if (b.x + 16 < p.x || b.x > p.x + p.w) {
+            b.lastPlatform = b.onPlatform;
             b.falling = true;
             b.vy = 0;
             // Reverse direction for next platform

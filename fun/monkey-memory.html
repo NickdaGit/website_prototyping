@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Monkey Memory Match - Monkey Magic AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .game-logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+    }
+    .game-logo img {
+      width: 80px;
+      height: auto;
+    }
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      max-width: 100%;
+    }
+    canvas {
+      display: block;
+      border: 2px solid #333;
+      max-width: 100%;
+      height: auto;
+      cursor: pointer;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      width: 420px;
+      max-width: 100%;
+      padding: 8px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #f0e040;
+      font-family: monospace;
+    }
+    .back-link {
+      margin-top: 16px;
+      padding: 8px 20px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .back-link:hover { background: #333; color: #fff; }
+    @media (max-width: 520px) {
+      .game-wrapper { padding: 5px; }
+      .hud { font-size: 12px; }
+      .game-logo { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="game-logo">
+  <a href="/"><img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo"></a>
+</div>
+
+<div class="game-wrapper">
+  <div class="hud">
+    <span id="hud-moves">MOVES: 0</span>
+    <span id="hud-matches">MATCHES: 0/8</span>
+    <span id="hud-time">TIME: 0s</span>
+  </div>
+  <canvas id="game" width="420" height="440"></canvas>
+  <a href="/fun.html" class="back-link">Back to Fun</a>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  var canvas = document.getElementById('game');
+  var ctx = canvas.getContext('2d');
+  var CW = 420;
+  var CH = 440;
+
+  // Grid: 4 columns x 4 rows = 16 cards = 8 pairs
+  var COLS = 4;
+  var ROWS = 4;
+  var CARD_W = 88;
+  var CARD_H = 96;
+  var GAP = 8;
+  var OFFSET_X = (CW - (COLS * CARD_W + (COLS - 1) * GAP)) / 2;
+  var OFFSET_Y = 20;
+
+  // Game state
+  var state = 'title'; // title, playing, win
+  var cards = [];
+  var flipped = []; // indices of currently flipped cards (max 2)
+  var matched = []; // indices of matched cards
+  var moves = 0;
+  var matchCount = 0;
+  var startTime = 0;
+  var elapsed = 0;
+  var flipBackTimer = 0;
+  var FLIP_BACK_DELAY = 40; // frames
+  var frameCount = 0;
+
+  // Card types — 8 icons
+  var ICONS = [
+    { name: 'banana', color: '#f0e040' },
+    { name: 'monkey', color: '#c47a34' },
+    { name: 'coconut', color: '#8B6914' },
+    { name: 'palm', color: '#3a8a30' },
+    { name: 'star', color: '#4a6cf7' },
+    { name: 'barrel', color: '#8B4513' },
+    { name: 'hat', color: '#cc2222' },
+    { name: 'heart', color: '#e040a0' }
+  ];
+
+  // Pixel art icons (5x5 grids)
+  var ICON_PIXELS = {
+    banana: [
+      [0,0,1,0,0],
+      [0,1,1,0,0],
+      [0,1,0,0,0],
+      [1,1,0,0,0],
+      [1,0,0,0,0]
+    ],
+    monkey: [
+      [0,1,1,1,0],
+      [1,1,1,1,1],
+      [1,0,1,0,1],
+      [0,1,1,1,0],
+      [0,0,1,0,0]
+    ],
+    coconut: [
+      [0,1,1,1,0],
+      [1,1,1,1,1],
+      [1,1,0,1,1],
+      [1,1,1,1,1],
+      [0,1,1,1,0]
+    ],
+    palm: [
+      [1,0,1,0,1],
+      [0,1,1,1,0],
+      [1,1,1,1,1],
+      [0,0,1,0,0],
+      [0,0,1,0,0]
+    ],
+    star: [
+      [0,0,1,0,0],
+      [0,1,1,1,0],
+      [1,1,1,1,1],
+      [0,1,1,1,0],
+      [1,0,0,0,1]
+    ],
+    barrel: [
+      [0,1,1,1,0],
+      [1,0,1,0,1],
+      [1,1,1,1,1],
+      [1,0,1,0,1],
+      [0,1,1,1,0]
+    ],
+    hat: [
+      [0,1,1,1,0],
+      [0,1,1,1,0],
+      [1,1,1,1,1],
+      [1,1,1,1,1],
+      [0,0,0,0,0]
+    ],
+    heart: [
+      [0,1,0,1,0],
+      [1,1,1,1,1],
+      [1,1,1,1,1],
+      [0,1,1,1,0],
+      [0,0,1,0,0]
+    ]
+  };
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = arr[i];
+      arr[i] = arr[j];
+      arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function initCards() {
+    var pairs = [];
+    for (var i = 0; i < ICONS.length; i++) {
+      pairs.push(i, i);
+    }
+    shuffle(pairs);
+    cards = [];
+    for (var idx = 0; idx < pairs.length; idx++) {
+      var col = idx % COLS;
+      var row = Math.floor(idx / COLS);
+      cards.push({
+        iconIdx: pairs[idx],
+        x: OFFSET_X + col * (CARD_W + GAP),
+        y: OFFSET_Y + row * (CARD_H + GAP),
+        flipAnim: 0 // 0 = face down, 1 = face up, between = animating
+      });
+    }
+  }
+
+  function startGame() {
+    initCards();
+    flipped = [];
+    matched = [];
+    moves = 0;
+    matchCount = 0;
+    startTime = Date.now();
+    elapsed = 0;
+    flipBackTimer = 0;
+    state = 'playing';
+  }
+
+  // --- Drawing ---
+  function drawCardBack(x, y) {
+    // Card background
+    ctx.fillStyle = '#1a1a4e';
+    ctx.fillRect(x, y, CARD_W, CARD_H);
+    // Border
+    ctx.strokeStyle = '#4a6cf7';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x + 1, y + 1, CARD_W - 2, CARD_H - 2);
+    // Question mark
+    ctx.fillStyle = '#4a6cf7';
+    ctx.font = 'bold 32px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('?', x + CARD_W / 2, y + CARD_H / 2);
+  }
+
+  function drawCardFace(x, y, iconIdx) {
+    var icon = ICONS[iconIdx];
+    var pixels = ICON_PIXELS[icon.name];
+    // Card background
+    ctx.fillStyle = '#0d0d20';
+    ctx.fillRect(x, y, CARD_W, CARD_H);
+    // Border
+    ctx.strokeStyle = icon.color;
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x + 1, y + 1, CARD_W - 2, CARD_H - 2);
+    // Draw pixel icon
+    var pixSize = 12;
+    var iconW = 5 * pixSize;
+    var iconH = 5 * pixSize;
+    var ox = x + (CARD_W - iconW) / 2;
+    var oy = y + (CARD_H - iconH) / 2 - 8;
+    for (var r = 0; r < 5; r++) {
+      for (var c = 0; c < 5; c++) {
+        if (pixels[r][c]) {
+          ctx.fillStyle = icon.color;
+          ctx.fillRect(ox + c * pixSize, oy + r * pixSize, pixSize - 1, pixSize - 1);
+        }
+      }
+    }
+    // Label
+    ctx.fillStyle = icon.color;
+    ctx.font = 'bold 11px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(icon.name.toUpperCase(), x + CARD_W / 2, y + CARD_H - 6);
+  }
+
+  function drawMatchedCard(x, y, iconIdx) {
+    var icon = ICONS[iconIdx];
+    ctx.globalAlpha = 0.4;
+    drawCardFace(x, y, iconIdx);
+    ctx.globalAlpha = 1;
+    // Checkmark
+    ctx.fillStyle = '#4aaa40';
+    ctx.font = 'bold 28px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('\u2713', x + CARD_W / 2, y + CARD_H / 2);
+  }
+
+  function isFlipped(idx) {
+    return flipped.indexOf(idx) !== -1;
+  }
+  function isMatched(idx) {
+    return matched.indexOf(idx) !== -1;
+  }
+
+  function drawCards() {
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      if (isMatched(i)) {
+        drawMatchedCard(card.x, card.y, card.iconIdx);
+      } else if (isFlipped(i)) {
+        drawCardFace(card.x, card.y, card.iconIdx);
+      } else {
+        drawCardBack(card.x, card.y);
+      }
+    }
+  }
+
+  function drawTitle() {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, CW, CH);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = 'bold 28px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('MONKEY', CW / 2, 100);
+    ctx.fillText('MEMORY MATCH', CW / 2, 136);
+
+    ctx.fillStyle = '#4a6cf7';
+    ctx.font = '12px monospace';
+    ctx.fillText('MONKEY MAGIC AI EDITION', CW / 2, 168);
+
+    // Draw sample icons
+    var sampleIcons = ['banana', 'monkey', 'star', 'heart'];
+    var sx = CW / 2 - 70;
+    for (var si = 0; si < sampleIcons.length; si++) {
+      var pix = ICON_PIXELS[sampleIcons[si]];
+      var col = ICONS.filter(function(ic) { return ic.name === sampleIcons[si]; })[0].color;
+      for (var r = 0; r < 5; r++) {
+        for (var c = 0; c < 5; c++) {
+          if (pix[r][c]) {
+            ctx.fillStyle = col;
+            ctx.fillRect(sx + si * 40 + c * 6, 200 + r * 6, 5, 5);
+          }
+        }
+      }
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px monospace';
+    var blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) {
+      ctx.fillText('CLICK TO START', CW / 2, 300);
+    }
+
+    ctx.fillStyle = '#888';
+    ctx.font = '11px monospace';
+    ctx.fillText('FIND ALL 8 MATCHING PAIRS', CW / 2, 350);
+    ctx.fillText('FEWER MOVES = MORE STARS', CW / 2, 370);
+  }
+
+  function drawWin() {
+    ctx.fillStyle = 'rgba(0,0,0,0.85)';
+    ctx.fillRect(0, 0, CW, CH);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = 'bold 30px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('YOU WIN!', CW / 2, 100);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '16px monospace';
+    ctx.fillText('MOVES: ' + moves, CW / 2, 155);
+    ctx.fillText('TIME: ' + elapsed + 's', CW / 2, 185);
+
+    // Star rating
+    var stars = 3;
+    if (moves > 16) stars = 2;
+    if (moves > 24) stars = 1;
+    ctx.fillStyle = '#f0e040';
+    ctx.font = '36px monospace';
+    var starStr = '';
+    for (var s = 0; s < stars; s++) starStr += '\u2605';
+    for (var e = stars; e < 3; e++) starStr += '\u2606';
+    ctx.fillText(starStr, CW / 2, 240);
+
+    ctx.fillStyle = '#888';
+    ctx.font = '12px monospace';
+    if (stars === 3) ctx.fillText('PERFECT!', CW / 2, 275);
+    else if (stars === 2) ctx.fillText('GREAT JOB!', CW / 2, 275);
+    else ctx.fillText('KEEP PRACTISING!', CW / 2, 275);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px monospace';
+    var blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) {
+      ctx.fillText('CLICK TO PLAY AGAIN', CW / 2, 340);
+    }
+  }
+
+  function updateHUD() {
+    document.getElementById('hud-moves').textContent = 'MOVES: ' + moves;
+    document.getElementById('hud-matches').textContent = 'MATCHES: ' + matchCount + '/8';
+    if (state === 'playing') {
+      elapsed = Math.floor((Date.now() - startTime) / 1000);
+    }
+    document.getElementById('hud-time').textContent = 'TIME: ' + elapsed + 's';
+  }
+
+  // --- Input ---
+  function getCardAt(mx, my) {
+    for (var i = 0; i < cards.length; i++) {
+      var c = cards[i];
+      if (mx >= c.x && mx <= c.x + CARD_W && my >= c.y && my <= c.y + CARD_H) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  function handleClick(e) {
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = CW / rect.width;
+    var scaleY = CH / rect.height;
+    var mx = (e.clientX - rect.left) * scaleX;
+    var my = (e.clientY - rect.top) * scaleY;
+
+    if (state === 'title') {
+      startGame();
+      return;
+    }
+
+    if (state === 'win') {
+      state = 'title';
+      return;
+    }
+
+    if (state !== 'playing') return;
+    if (flipBackTimer > 0) return; // waiting for flip back
+
+    var idx = getCardAt(mx, my);
+    if (idx < 0) return;
+    if (isFlipped(idx) || isMatched(idx)) return;
+
+    flipped.push(idx);
+
+    if (flipped.length === 2) {
+      moves++;
+      var a = flipped[0];
+      var b = flipped[1];
+      if (cards[a].iconIdx === cards[b].iconIdx) {
+        // Match!
+        matched.push(a, b);
+        matchCount++;
+        flipped = [];
+        if (matchCount === 8) {
+          elapsed = Math.floor((Date.now() - startTime) / 1000);
+          state = 'win';
+        }
+      } else {
+        // No match — start flip back timer
+        flipBackTimer = FLIP_BACK_DELAY;
+      }
+    }
+  }
+
+  canvas.addEventListener('click', handleClick);
+  canvas.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    var touch = e.touches[0];
+    handleClick({ clientX: touch.clientX, clientY: touch.clientY });
+  }, { passive: false });
+
+  // --- Main Loop ---
+  function loop() {
+    frameCount++;
+
+    if (flipBackTimer > 0) {
+      flipBackTimer--;
+      if (flipBackTimer <= 0) {
+        flipped = [];
+      }
+    }
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, CW, CH);
+
+    switch (state) {
+      case 'title':
+        drawTitle();
+        break;
+      case 'playing':
+        drawCards();
+        updateHUD();
+        break;
+      case 'win':
+        drawCards();
+        drawWin();
+        updateHUD();
+        break;
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+})();
+</script>
+
+</body>
+</html>

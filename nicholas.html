@@ -76,22 +76,6 @@
       overflow: hidden;
     }
 
-    .video-placeholder {
-      padding: 4rem 2rem;
-      color: #888;
-      font-size: 1.1rem;
-    }
-
-    .video-placeholder p {
-      margin: 0 0 0.5rem;
-    }
-
-    .video-placeholder .placeholder-icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      opacity: 0.4;
-    }
-
     @media (max-width: 768px) {
       .magazine-caption h1 {
         font-size: 1.8rem;
@@ -121,7 +105,6 @@
     <img src="/images/Nicholas_magazine01.jpg" alt="Nicholas on the cover of Fintech Magazine">
     <div class="magazine-caption">
       <h1>Nicholas</h1>
-      <p>Fintech Magazine — Cover Story</p>
     </div>
   </div>
 
@@ -158,11 +141,10 @@
     <div class="founder-video">
       <h2>Let's Hear from Our Founder</h2>
       <div class="video-container">
-        <div class="video-placeholder">
-          <div class="placeholder-icon">&#9654;</div>
-          <p>Video coming soon.</p>
-          <p style="font-size: 0.9rem; color: #aaa;">Nicholas will share his thoughts on Monkey Magic AI and its vision.</p>
-        </div>
+        <video controls playsinline style="width: 100%; display: block;">
+          <source src="/videos/nicholas_about.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
 

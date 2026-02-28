@@ -2,157 +2,542 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Banana Pong - MonkeyMagic.ai</title>
-  <link rel="stylesheet" href="/assets/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Banana Pong - Monkey Magic AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Inter', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .game-logo {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 20;
+    }
+    .game-logo img { width: 80px; height: auto; }
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      max-width: 100%;
+    }
+    canvas {
+      display: block;
+      border: 2px solid #333;
+      max-width: 100%;
+      height: auto;
+      cursor: none;
+      touch-action: none;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      width: 480px;
+      max-width: 100%;
+      padding: 8px 4px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #f0e040;
+      font-family: monospace;
+    }
+    .back-link {
+      margin-top: 16px;
+      padding: 8px 20px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #aaa;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .back-link:hover { background: #333; color: #fff; }
+    @media (max-width: 520px) {
+      .game-wrapper { padding: 5px; }
+      .hud { font-size: 12px; }
+      .game-logo { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Top nav -->
-  <nav class="top-nav">
-    <a href="/" class="logo-link">
-      <img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo" class="logo">
-    </a>
-    <div class="nav-links">
-      <a href="/about.html">About</a>
-      <a href="/knowledge/">Knowledge <span class="tagline">– for curious little monkeys</span></a>
-      <a href="/fun/">Fun Stuff <span class="tagline">– for cheeky little monkeys</span></a>
-    </div>
-  </nav>
+<div class="game-logo">
+  <a href="/"><img src="/images/MM_LOGO5.PNG" alt="Monkey Magic Logo"></a>
+</div>
 
-  <!-- Game header -->
-  <div class="hero game-hero">
-    <div class="hero-text">
-      <h1>Banana Pong</h1>
-      <p>Keep the banana in the air. Gunther's record: 42 (he used a wand).</p>
-    </div>
+<div class="game-wrapper">
+  <div class="hud">
+    <span id="hud-score">SCORE: 0</span>
+    <span id="hud-lives">LIVES: 3</span>
+    <span id="hud-best">BEST: 0</span>
   </div>
+  <canvas id="game" width="480" height="400"></canvas>
+  <a href="/fun.html" class="back-link">Back to Fun</a>
+</div>
 
-  <!-- Game canvas -->
-  <section class="game-section">
-    <div class="game-container">
-      <canvas id="pongCanvas" width="800" height="500"></canvas>
-      <div class="game-info">
-        <p>Score: <span id="score">0</span></p>
-        <p>High Score: <span id="highScore">0</span></p>
-        <button id="resetBtn">Reset Game</button>
-      </div>
-    </div>
-  </section>
+<script>
+(function() {
+  'use strict';
 
-  <!-- Footer nudge -->
-  <footer>
-    <p>Back to <a href="/fun/">fun</a> – or try <a href="/fun/prompt-roulette.html">Prompt Roulette</a> next.</p>
-  </footer>
+  var canvas = document.getElementById('game');
+  var ctx = canvas.getContext('2d');
+  var CW = 480;
+  var CH = 400;
 
-  <script>
-    const canvas = document.getElementById('pongCanvas');
-    const ctx = canvas.getContext('2d');
-    const scoreEl = document.getElementById('score');
-    const highScoreEl = document.getElementById('highScore');
-    const resetBtn = document.getElementById('resetBtn');
+  // Game state
+  var state = 'title'; // title, playing, gameOver
+  var score = 0;
+  var lives = 3;
+  var highScore = 0;
+  var hitCount = 0;
+  var frameCount = 0;
+  var serveTimer = 0;
 
-    let score = 0;
-    let highScore = localStorage.getItem('bananaPongHigh') || 0;
-    highScoreEl.textContent = highScore;
+  // Load high score
+  try { highScore = parseInt(localStorage.getItem('bananaPongBest')) || 0; } catch(e) {}
 
-    // Banana (ball)
-    let banana = { x: canvas.width / 2, y: canvas.height / 2, dx: 5, dy: -5, radius: 20 };
-    // Paddle
-    let paddle = { x: canvas.width / 2 - 50, y: canvas.height - 40, width: 100, height: 20, speed: 10 };
+  // Paddle
+  var PADDLE_W = 80;
+  var PADDLE_H = 14;
+  var paddle = { x: CW / 2 - PADDLE_W / 2, y: CH - 40, w: PADDLE_W, h: PADDLE_H };
 
-    let rightPressed = false;
-    let leftPressed = false;
+  // Ball (banana)
+  var BALL_SIZE = 12;
+  var ball = {};
+  var BASE_SPEED = 4;
+  var currentSpeed = BASE_SPEED;
 
-    // Controls
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Right' || e.key === 'ArrowRight') rightPressed = true;
-      if (e.key === 'Left' || e.key === 'ArrowLeft') leftPressed = true;
-    });
-    document.addEventListener('keyup', (e) => {
-      if (e.key === 'Right' || e.key === 'ArrowRight') rightPressed = false;
-      if (e.key === 'Left' || e.key === 'ArrowLeft') leftPressed = false;
-    });
+  function resetBall() {
+    ball.x = CW / 2;
+    ball.y = CH / 2 - 40;
+    var angle = -Math.PI / 2 + (Math.random() - 0.5) * 1.2;
+    ball.vx = Math.cos(angle) * currentSpeed;
+    ball.vy = Math.sin(angle) * currentSpeed;
+    if (ball.vy > -1) ball.vy = -currentSpeed * 0.7;
+    ball.rot = 0;
+    ball.rotSpeed = 0.05;
+    serveTimer = 60;
+  }
 
-    // Mouse for fun
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      paddle.x = e.clientX - rect.left - paddle.width / 2;
-      if (paddle.x < 0) paddle.x = 0;
-      if (paddle.x > canvas.width - paddle.width) paddle.x = canvas.width - paddle.width;
-    });
+  // Particles
+  var particles = [];
 
-    function drawBanana() {
+  function spawnParticles(x, y, count) {
+    for (var i = 0; i < count; i++) {
+      var angle = Math.random() * Math.PI * 2;
+      var speed = 1 + Math.random() * 3;
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 2,
+        life: 20 + Math.floor(Math.random() * 20),
+        color: Math.random() > 0.5 ? '#f0e040' : '#ffcc00',
+        size: 2 + Math.random() * 2
+      });
+    }
+  }
+
+  function updateParticles() {
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.1;
+      p.life--;
+      if (p.life <= 0) {
+        particles.splice(i, 1);
+      }
+    }
+  }
+
+  function drawParticles() {
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      ctx.globalAlpha = p.life / 40;
+      ctx.fillStyle = p.color;
       ctx.beginPath();
-      ctx.arc(banana.x, banana.y, banana.radius, 0, Math.PI * 2);
-      ctx.fillStyle = '#ffcc00'; // banana yellow
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
-      ctx.closePath();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // --- Input ---
+  var keys = {};
+  var mouseX = CW / 2;
+  var useMouseControl = false;
+
+  document.addEventListener('keydown', function(e) {
+    keys[e.code] = true;
+    if (['ArrowLeft', 'ArrowRight', 'Space'].indexOf(e.code) >= 0) {
+      e.preventDefault();
+      useMouseControl = false;
+    }
+  });
+  document.addEventListener('keyup', function(e) { keys[e.code] = false; });
+
+  canvas.addEventListener('mousemove', function(e) {
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = CW / rect.width;
+    mouseX = (e.clientX - rect.left) * scaleX;
+    useMouseControl = true;
+  });
+
+  // Touch support
+  var touchActive = false;
+  canvas.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    touchActive = true;
+    var rect = canvas.getBoundingClientRect();
+    var scaleX = CW / rect.width;
+    mouseX = (e.touches[0].clientX - rect.left) * scaleX;
+    useMouseControl = true;
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    if (e.touches.length > 0) {
+      var rect = canvas.getBoundingClientRect();
+      var scaleX = CW / rect.width;
+      mouseX = (e.touches[0].clientX - rect.left) * scaleX;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    touchActive = false;
+  }, { passive: false });
+
+  // --- Drawing ---
+  function drawBanana(x, y, rot) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(rot);
+    // Banana shape: curved crescent
+    ctx.fillStyle = '#ffcc00';
+    ctx.beginPath();
+    ctx.arc(0, 2, BALL_SIZE * 0.8, Math.PI * 0.2, Math.PI * 0.8, false);
+    ctx.arc(0, -2, BALL_SIZE * 1.1, Math.PI * 0.8, Math.PI * 0.2, true);
+    ctx.fill();
+    // Tip
+    ctx.fillStyle = '#a08020';
+    ctx.beginPath();
+    ctx.arc(BALL_SIZE * 0.65, -1, 2, 0, Math.PI * 2);
+    ctx.fill();
+    // Highlight
+    ctx.fillStyle = '#ffe860';
+    ctx.beginPath();
+    ctx.arc(-2, -1, BALL_SIZE * 0.3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawPaddle() {
+    var px = paddle.x;
+    var py = paddle.y;
+    // Wooden paddle with pixel-y look
+    // Main body
+    ctx.fillStyle = '#8B5E3C';
+    ctx.fillRect(px, py, paddle.w, paddle.h);
+    // Top highlight
+    ctx.fillStyle = '#A97B50';
+    ctx.fillRect(px, py, paddle.w, 3);
+    // Wood grain lines
+    ctx.fillStyle = '#7A5030';
+    ctx.fillRect(px + 10, py + 5, 20, 2);
+    ctx.fillRect(px + 40, py + 7, 15, 2);
+    ctx.fillRect(px + 60, py + 4, 10, 2);
+    // Edge highlights
+    ctx.fillStyle = '#6B4226';
+    ctx.fillRect(px, py + paddle.h - 2, paddle.w, 2);
+    // Left/right caps
+    ctx.fillStyle = '#5A3418';
+    ctx.fillRect(px, py, 3, paddle.h);
+    ctx.fillRect(px + paddle.w - 3, py, 3, paddle.h);
+  }
+
+  function drawWalls() {
+    // Side walls
+    ctx.fillStyle = '#1a1a4e';
+    ctx.fillRect(0, 0, 4, CH);
+    ctx.fillRect(CW - 4, 0, 4, CH);
+    // Top wall
+    ctx.fillRect(0, 0, CW, 4);
+    // Highlights
+    ctx.fillStyle = '#2a2a7e';
+    ctx.fillRect(4, 0, 1, CH);
+    ctx.fillRect(CW - 5, 0, 1, CH);
+    ctx.fillRect(0, 4, CW, 1);
+  }
+
+  function drawHUD() {
+    document.getElementById('hud-score').textContent = 'SCORE: ' + score;
+    document.getElementById('hud-lives').textContent = 'LIVES: ' + lives;
+    document.getElementById('hud-best').textContent = 'BEST: ' + highScore;
+  }
+
+  function drawTitle() {
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, CW, CH);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = 'bold 32px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('BANANA', CW / 2, 100);
+    ctx.fillText('PONG', CW / 2, 140);
+
+    ctx.fillStyle = '#4a6cf7';
+    ctx.font = '12px monospace';
+    ctx.fillText('MONKEY MAGIC AI EDITION', CW / 2, 168);
+
+    // Draw banana
+    drawBanana(CW / 2, 220, Math.sin(frameCount * 0.03) * 0.5);
+
+    // Draw paddle preview
+    ctx.fillStyle = '#8B5E3C';
+    ctx.fillRect(CW / 2 - 40, 260, 80, 14);
+    ctx.fillStyle = '#A97B50';
+    ctx.fillRect(CW / 2 - 40, 260, 80, 3);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px monospace';
+    var blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) ctx.fillText('CLICK OR PRESS SPACE', CW / 2, 320);
+
+    ctx.fillStyle = '#888';
+    ctx.font = '11px monospace';
+    ctx.fillText('MOUSE/TOUCH: MOVE PADDLE', CW / 2, 360);
+    ctx.fillText('ARROW KEYS ALSO WORK', CW / 2, 378);
+  }
+
+  function drawGameOver() {
+    ctx.fillStyle = 'rgba(0,0,0,0.85)';
+    ctx.fillRect(0, 0, CW, CH);
+
+    ctx.fillStyle = '#cc2222';
+    ctx.font = 'bold 34px monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER', CW / 2, 140);
+
+    ctx.fillStyle = '#f0e040';
+    ctx.font = '20px monospace';
+    ctx.fillText('SCORE: ' + score, CW / 2, 195);
+
+    if (score >= highScore && score > 0) {
+      ctx.fillStyle = '#4aff4a';
+      ctx.font = 'bold 16px monospace';
+      ctx.fillText('NEW HIGH SCORE!', CW / 2, 230);
     }
 
-    function drawPaddle() {
-      ctx.beginPath();
-      ctx.rect(paddle.x, paddle.y, paddle.width, paddle.height);
-      ctx.fillStyle = '#8B4513'; // brown peel
-      ctx.fill();
-      ctx.closePath();
+    ctx.fillStyle = '#00f0f0';
+    ctx.font = '14px monospace';
+    ctx.fillText('BEST: ' + highScore, CW / 2, 260);
+
+    ctx.fillStyle = '#fff';
+    ctx.font = '14px monospace';
+    var blink = Math.floor(frameCount / 30) % 2 === 0;
+    if (blink) ctx.fillText('CLICK OR PRESS SPACE', CW / 2, 320);
+  }
+
+  // --- Game Logic ---
+  function startGame() {
+    score = 0;
+    lives = 3;
+    hitCount = 0;
+    currentSpeed = BASE_SPEED;
+    paddle.x = CW / 2 - PADDLE_W / 2;
+    particles = [];
+    resetBall();
+    state = 'playing';
+  }
+
+  function loseLife() {
+    lives--;
+    if (lives <= 0) {
+      state = 'gameOver';
+    } else {
+      resetBall();
+    }
+  }
+
+  function updatePlaying() {
+    // Serve delay
+    if (serveTimer > 0) {
+      serveTimer--;
+      // Ball sits still during serve delay
+      ball.x = CW / 2;
+      ball.y = CH / 2 - 40;
     }
 
-    function update() {
-      // Move paddle
-      if (rightPressed && paddle.x < canvas.width - paddle.width) paddle.x += paddle.speed;
-      if (leftPressed && paddle.x > 0) paddle.x -= paddle.speed;
+    // Move paddle
+    if (useMouseControl) {
+      var targetX = mouseX - paddle.w / 2;
+      // Smooth follow
+      paddle.x += (targetX - paddle.x) * 0.4;
+    } else {
+      var paddleSpeed = 6;
+      if (keys['ArrowLeft'] || keys['KeyA']) paddle.x -= paddleSpeed;
+      if (keys['ArrowRight'] || keys['KeyD']) paddle.x += paddleSpeed;
+    }
 
-      // Move banana
-      banana.x += banana.dx;
-      banana.y += banana.dy;
+    // Clamp paddle
+    if (paddle.x < 4) paddle.x = 4;
+    if (paddle.x + paddle.w > CW - 4) paddle.x = CW - 4 - paddle.w;
 
-      // Bounce walls
-      if (banana.x + banana.radius > canvas.width || banana.x - banana.radius < 0) banana.dx *= -1;
-      if (banana.y - banana.radius < 0) banana.dy *= -1;
+    if (serveTimer > 0) return;
 
-      // Paddle hit
-      if (banana.y + banana.radius > paddle.y && banana.x > paddle.x && banana.x < paddle.x + paddle.width) {
-        banana.dy *= -1;
-        score++;
-        scoreEl.textContent = score;
-        if (score > highScore) {
-          highScore = score;
-          highScoreEl.textContent = highScore;
-          localStorage.setItem('bananaPongHigh', highScore);
+    // Move ball
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+    ball.rot += ball.rotSpeed;
+
+    // Side wall bounce
+    if (ball.x - BALL_SIZE < 4) {
+      ball.x = 4 + BALL_SIZE;
+      ball.vx = Math.abs(ball.vx);
+      ball.rotSpeed = -ball.rotSpeed;
+    }
+    if (ball.x + BALL_SIZE > CW - 4) {
+      ball.x = CW - 4 - BALL_SIZE;
+      ball.vx = -Math.abs(ball.vx);
+      ball.rotSpeed = -ball.rotSpeed;
+    }
+
+    // Top wall bounce
+    if (ball.y - BALL_SIZE < 4) {
+      ball.y = 4 + BALL_SIZE;
+      ball.vy = Math.abs(ball.vy);
+    }
+
+    // Paddle collision
+    if (ball.vy > 0 &&
+        ball.y + BALL_SIZE >= paddle.y &&
+        ball.y + BALL_SIZE <= paddle.y + paddle.h + ball.vy + 2 &&
+        ball.x >= paddle.x - BALL_SIZE * 0.5 &&
+        ball.x <= paddle.x + paddle.w + BALL_SIZE * 0.5) {
+
+      // Where on the paddle did we hit? -1 (left edge) to 1 (right edge)
+      var hitPos = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+      if (hitPos < -1) hitPos = -1;
+      if (hitPos > 1) hitPos = 1;
+
+      // Angle-based deflection: -60 to +60 degrees from vertical
+      var maxAngle = Math.PI / 3; // 60 degrees
+      var angle = hitPos * maxAngle;
+
+      ball.vx = Math.sin(angle) * currentSpeed;
+      ball.vy = -Math.cos(angle) * currentSpeed;
+
+      // Ensure minimum upward velocity
+      if (ball.vy > -1.5) ball.vy = -1.5;
+
+      ball.y = paddle.y - BALL_SIZE;
+      ball.rotSpeed = ball.vx * 0.02;
+
+      // Score
+      score++;
+      hitCount++;
+
+      // Speed increase every 5 hits
+      if (hitCount % 5 === 0) {
+        currentSpeed += 0.4;
+        // Rescale velocity to new speed
+        var len = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+        if (len > 0) {
+          ball.vx = (ball.vx / len) * currentSpeed;
+          ball.vy = (ball.vy / len) * currentSpeed;
         }
       }
 
-      // Miss
-      if (banana.y + banana.radius > canvas.height) {
-        resetGame();
+      // Update high score
+      if (score > highScore) {
+        highScore = score;
+        try { localStorage.setItem('bananaPongBest', highScore); } catch(e) {}
       }
+
+      // Particles
+      spawnParticles(ball.x, paddle.y, 8);
     }
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawBanana();
-      drawPaddle();
-      update();
-      requestAnimationFrame(draw);
+    // Miss bottom
+    if (ball.y - BALL_SIZE > CH) {
+      loseLife();
     }
 
-    function resetGame() {
-      banana.x = canvas.width / 2;
-      banana.y = canvas.height / 2;
-      banana.dx = 5;
-      banana.dy = -5;
-      score = 0;
-      scoreEl.textContent = 0;
+    updateParticles();
+  }
+
+  // --- Main Loop ---
+  function loop() {
+    frameCount++;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, CW, CH);
+
+    switch (state) {
+      case 'title':
+        drawTitle();
+        if (keys['Space'] || touchActive) {
+          keys['Space'] = false;
+          touchActive = false;
+          startGame();
+        }
+        break;
+
+      case 'playing':
+        updatePlaying();
+        drawWalls();
+        drawPaddle();
+        // Draw ball
+        if (serveTimer > 0) {
+          // Blink during serve
+          if (Math.floor(serveTimer / 8) % 2 === 0) {
+            drawBanana(ball.x, ball.y, ball.rot);
+          }
+        } else {
+          drawBanana(ball.x, ball.y, ball.rot);
+        }
+        drawParticles();
+        drawHUD();
+        // Serve text
+        if (serveTimer > 0) {
+          ctx.fillStyle = '#f0e040';
+          ctx.font = 'bold 16px monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText('GET READY!', CW / 2, CH / 2 + 30);
+        }
+        break;
+
+      case 'gameOver':
+        drawWalls();
+        drawPaddle();
+        drawParticles();
+        drawGameOver();
+        drawHUD();
+        if (keys['Space'] || touchActive) {
+          keys['Space'] = false;
+          touchActive = false;
+          state = 'title';
+        }
+        break;
     }
 
-    resetBtn.addEventListener('click', resetGame);
+    requestAnimationFrame(loop);
+  }
 
-    draw();
-  </script>
+  loop();
+})();
+</script>
 
 </body>
 </html>
-
-
