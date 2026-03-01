@@ -60,6 +60,66 @@
     "tags": ["pun", "wordplay", "one-liner"]
   },
   {
+    "file": "/fun/jokes/quick-hits/011.md",
+    "category": "quick-hits",
+    "title": "Elevator Joke",
+    "tags": ["elevator", "one-liner", "pun"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/012.md",
+    "category": "quick-hits",
+    "title": "Broken Pencil",
+    "tags": ["pencil", "one-liner", "pointless"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/013.md",
+    "category": "quick-hits",
+    "title": "Ceiling Fan",
+    "tags": ["ceiling", "one-liner", "fan"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/014.md",
+    "category": "quick-hits",
+    "title": "Calendar Diet",
+    "tags": ["calendar", "one-liner", "dates"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/015.md",
+    "category": "quick-hits",
+    "title": "Bicycle Standing",
+    "tags": ["bicycle", "one-liner", "classic"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/016.md",
+    "category": "quick-hits",
+    "title": "Graveyard Popularity",
+    "tags": ["graveyard", "one-liner", "classic"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/017.md",
+    "category": "quick-hits",
+    "title": "Invisible Man",
+    "tags": ["invisible", "one-liner", "doctor"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/018.md",
+    "category": "quick-hits",
+    "title": "Scarecrow Award",
+    "tags": ["scarecrow", "one-liner", "classic"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/019.md",
+    "category": "quick-hits",
+    "title": "Parallel Lines",
+    "tags": ["math", "one-liner", "geometry"]
+  },
+  {
+    "file": "/fun/jokes/quick-hits/020.md",
+    "category": "quick-hits",
+    "title": "Fake Spaghetti",
+    "tags": ["food", "one-liner", "pasta"]
+  },
+  {
     "file": "/fun/jokes/dad-jokes/001.md",
     "category": "dad-jokes",
     "title": "Eyebrow Surprise",
@@ -118,6 +178,66 @@
     "category": "dad-jokes",
     "title": "Paper Joke",
     "tags": ["paper", "pun", "dad-joke", "meta"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/011.md",
+    "category": "dad-jokes",
+    "title": "Ocean Greeting",
+    "tags": ["ocean", "pun", "dad-joke", "waves"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/012.md",
+    "category": "dad-jokes",
+    "title": "Broken Boomerang",
+    "tags": ["boomerang", "pun", "dad-joke"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/013.md",
+    "category": "dad-jokes",
+    "title": "Fridge Running",
+    "tags": ["fridge", "classic", "dad-joke", "phone"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/014.md",
+    "category": "dad-jokes",
+    "title": "Skeleton's Loneliness",
+    "tags": ["skeleton", "pun", "dad-joke"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/015.md",
+    "category": "dad-jokes",
+    "title": "Chicken Gym",
+    "tags": ["chicken", "exercise", "dad-joke", "pun"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/016.md",
+    "category": "dad-jokes",
+    "title": "Barber Race",
+    "tags": ["barber", "pun", "dad-joke", "racing"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/017.md",
+    "category": "dad-jokes",
+    "title": "Bee Hair",
+    "tags": ["bee", "pun", "dad-joke", "hair"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/018.md",
+    "category": "dad-jokes",
+    "title": "Buffalo Farewell",
+    "tags": ["buffalo", "pun", "dad-joke", "family"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/019.md",
+    "category": "dad-jokes",
+    "title": "Egg Joke",
+    "tags": ["egg", "pun", "dad-joke", "food"]
+  },
+  {
+    "file": "/fun/jokes/dad-jokes/020.md",
+    "category": "dad-jokes",
+    "title": "Calendar Diet",
+    "tags": ["calendar", "pun", "dad-joke", "food"]
   },
   {
     "file": "/fun/jokes/story-jokes/001.md",
@@ -180,6 +300,66 @@
     "tags": ["hotel", "travel", "marriage", "story"]
   },
   {
+    "file": "/fun/jokes/story-jokes/011.md",
+    "category": "story-jokes",
+    "title": "The Talking Dog",
+    "tags": ["animals", "dog", "bar", "story"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/012.md",
+    "category": "story-jokes",
+    "title": "The Lost Wallet",
+    "tags": ["honesty", "wallet", "story", "church"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/013.md",
+    "category": "story-jokes",
+    "title": "The Genie's Fine Print",
+    "tags": ["genie", "wishes", "story", "twist"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/014.md",
+    "category": "story-jokes",
+    "title": "The Job Interview",
+    "tags": ["work", "interview", "story", "honesty"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/015.md",
+    "category": "story-jokes",
+    "title": "The Shipwreck",
+    "tags": ["island", "story", "engineer", "twist"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/016.md",
+    "category": "story-jokes",
+    "title": "Library Confusion",
+    "tags": ["library", "fish", "story", "misunderstanding"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/017.md",
+    "category": "story-jokes",
+    "title": "The Painting Contractor",
+    "tags": ["work", "painting", "story", "misunderstanding"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/018.md",
+    "category": "story-jokes",
+    "title": "Three Envelopes",
+    "tags": ["management", "advice", "story", "office"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/019.md",
+    "category": "story-jokes",
+    "title": "The Photographer",
+    "tags": ["photographer", "party", "story", "clever"]
+  },
+  {
+    "file": "/fun/jokes/story-jokes/020.md",
+    "category": "story-jokes",
+    "title": "The Programmer's Lamp",
+    "tags": ["programming", "genie", "story", "logic"]
+  },
+  {
     "file": "/fun/jokes/tech-ai/001.md",
     "category": "tech-ai",
     "title": "AI Therapy Session",
@@ -238,6 +418,66 @@
     "category": "tech-ai",
     "title": "The Password Dilemma",
     "tags": ["password", "security", "programming", "frustration"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/011.md",
+    "category": "tech-ai",
+    "title": "AI Therapy",
+    "tags": ["AI", "therapy", "tech"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/012.md",
+    "category": "tech-ai",
+    "title": "Programmer's Diet",
+    "tags": ["programming", "food", "tech"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/013.md",
+    "category": "tech-ai",
+    "title": "Machine Learning Date",
+    "tags": ["ML", "dating", "tech"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/014.md",
+    "category": "tech-ai",
+    "title": "DNS Joke",
+    "tags": ["DNS", "networking", "tech"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/015.md",
+    "category": "tech-ai",
+    "title": "Cloud Storage",
+    "tags": ["cloud", "storage", "tech"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/016.md",
+    "category": "tech-ai",
+    "title": "Git Blame",
+    "tags": ["git", "blame", "programming"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/017.md",
+    "category": "tech-ai",
+    "title": "AI Knock Knock",
+    "tags": ["AI", "knock-knock", "chatbot"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/018.md",
+    "category": "tech-ai",
+    "title": "Debugging Duck",
+    "tags": ["debugging", "rubber-duck", "programming"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/019.md",
+    "category": "tech-ai",
+    "title": "WiFi Password",
+    "tags": ["wifi", "password", "tech"]
+  },
+  {
+    "file": "/fun/jokes/tech-ai/020.md",
+    "category": "tech-ai",
+    "title": "AI Compliment",
+    "tags": ["AI", "compliment", "tech"]
   },
   {
     "file": "/fun/jokes/monkey-magic-specials/001.md",
@@ -300,64 +540,64 @@
     "tags": ["monkey", "blockchain", "banana", "crypto", "AI"]
   },
   {
-    "file": "/fun/jokes/dark-humor/001.md",
-    "category": "dark-humor",
-    "title": "Narcissist's Reflection",
-    "tags": ["therapy", "narcissism", "mirror", "dark"]
+    "file": "/fun/jokes/monkey-magic-specials/011.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey's Favourite Key",
+    "tags": ["monkey", "keyboard", "pun", "tech"]
   },
   {
-    "file": "/fun/jokes/dark-humor/002.md",
-    "category": "dark-humor",
-    "title": "Optimist's Half Glass",
-    "tags": ["optimist", "pessimist", "perspective", "dark"]
+    "file": "/fun/jokes/monkey-magic-specials/012.md",
+    "category": "monkey-magic-specials",
+    "title": "Banana Split Decision",
+    "tags": ["monkey", "banana", "ice-cream", "pun"]
   },
   {
-    "file": "/fun/jokes/dark-humor/003.md",
-    "category": "dark-humor",
-    "title": "Procrastinator's Will",
-    "tags": ["procrastination", "death", "will", "dark"]
+    "file": "/fun/jokes/monkey-magic-specials/013.md",
+    "category": "monkey-magic-specials",
+    "title": "AI Monkey Training",
+    "tags": ["monkey", "AI", "training", "machine-learning"]
   },
   {
-    "file": "/fun/jokes/dark-humor/004.md",
-    "category": "dark-humor",
-    "title": "Haunted House Review",
-    "tags": ["haunted", "house", "real-estate", "dark", "ghosts"]
+    "file": "/fun/jokes/monkey-magic-specials/014.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey's Password",
+    "tags": ["monkey", "password", "security", "banana"]
   },
   {
-    "file": "/fun/jokes/dark-humor/005.md",
-    "category": "dark-humor",
-    "title": "Dentist's Favorite Time",
-    "tags": ["dentist", "time", "pun", "dark"]
+    "file": "/fun/jokes/monkey-magic-specials/015.md",
+    "category": "monkey-magic-specials",
+    "title": "Gorilla Marketing",
+    "tags": ["monkey", "gorilla", "marketing", "business", "pun"]
   },
   {
-    "file": "/fun/jokes/dark-humor/006.md",
-    "category": "dark-humor",
-    "title": "Life's Terms of Service",
-    "tags": ["life", "terms-of-service", "dark", "existential"]
+    "file": "/fun/jokes/monkey-magic-specials/016.md",
+    "category": "monkey-magic-specials",
+    "title": "Banana Phone",
+    "tags": ["monkey", "banana", "phone", "tech"]
   },
   {
-    "file": "/fun/jokes/dark-humor/007.md",
-    "category": "dark-humor",
-    "title": "Unreliable Narrator",
-    "tags": ["honesty", "trust", "dark", "meta"]
+    "file": "/fun/jokes/monkey-magic-specials/017.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey's First App",
+    "tags": ["monkey", "app", "tech", "startup"]
   },
   {
-    "file": "/fun/jokes/dark-humor/008.md",
-    "category": "dark-humor",
-    "title": "The Man Who Knew Too Little",
-    "tags": ["ignorance", "knowledge", "dark", "bliss"]
+    "file": "/fun/jokes/monkey-magic-specials/018.md",
+    "category": "monkey-magic-specials",
+    "title": "Chimpion",
+    "tags": ["monkey", "champion", "sports", "pun"]
   },
   {
-    "file": "/fun/jokes/dark-humor/009.md",
-    "category": "dark-humor",
-    "title": "Autocorrect Eulogy",
-    "tags": ["autocorrect", "funeral", "technology", "dark"]
+    "file": "/fun/jokes/monkey-magic-specials/019.md",
+    "category": "monkey-magic-specials",
+    "title": "Monkey Magic AI Pitch",
+    "tags": ["monkey", "AI", "startup", "pitch", "venture"]
   },
   {
-    "file": "/fun/jokes/dark-humor/010.md",
-    "category": "dark-humor",
-    "title": "DIY Therapist",
-    "tags": ["therapy", "self-help", "dark", "budget"]
+    "file": "/fun/jokes/monkey-magic-specials/020.md",
+    "category": "monkey-magic-specials",
+    "title": "Primate Minister",
+    "tags": ["monkey", "politics", "pun", "primate"]
   },
   {
     "file": "/fun/jokes/absurd-surreal/001.md",
@@ -418,5 +658,65 @@
     "category": "absurd-surreal",
     "title": "The Chair's Promotion",
     "tags": ["chair", "furniture", "promotion", "absurd", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/011.md",
+    "category": "absurd-surreal",
+    "title": "Suspicious Toaster",
+    "tags": ["toaster", "absurd", "appliance"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/012.md",
+    "category": "absurd-surreal",
+    "title": "Time-Travelling Snail",
+    "tags": ["snail", "time-travel", "absurd"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/013.md",
+    "category": "absurd-surreal",
+    "title": "Existential Sock",
+    "tags": ["sock", "existential", "absurd"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/014.md",
+    "category": "absurd-surreal",
+    "title": "Chair Meeting",
+    "tags": ["furniture", "meeting", "absurd"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/015.md",
+    "category": "absurd-surreal",
+    "title": "Cloud Complaint",
+    "tags": ["cloud", "complaint", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/016.md",
+    "category": "absurd-surreal",
+    "title": "Philosophical Sandwich",
+    "tags": ["sandwich", "philosophy", "absurd"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/017.md",
+    "category": "absurd-surreal",
+    "title": "Ambitious Lamp",
+    "tags": ["lamp", "ambition", "absurd"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/018.md",
+    "category": "absurd-surreal",
+    "title": "Penguin Bus",
+    "tags": ["penguin", "bus", "surreal"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/019.md",
+    "category": "absurd-surreal",
+    "title": "Arguing Stairs",
+    "tags": ["stairs", "argument", "absurd"]
+  },
+  {
+    "file": "/fun/jokes/absurd-surreal/020.md",
+    "category": "absurd-surreal",
+    "title": "Retired Boomerang",
+    "tags": ["boomerang", "retirement", "absurd"]
   }
 ]

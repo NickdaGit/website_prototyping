@@ -224,21 +224,36 @@
     ctx.save();
     ctx.translate(x, y);
     ctx.rotate(rot);
-    // Banana shape: curved crescent
-    ctx.fillStyle = '#ffcc00';
+    // Scale up drawing for visibility while keeping BALL_SIZE for collision
+    var s = 1.4;
+    // Banana body — curved crescent using quadratic curves
+    ctx.fillStyle = '#FFD700';
     ctx.beginPath();
-    ctx.arc(0, 2, BALL_SIZE * 0.8, Math.PI * 0.2, Math.PI * 0.8, false);
-    ctx.arc(0, -2, BALL_SIZE * 1.1, Math.PI * 0.8, Math.PI * 0.2, true);
+    ctx.moveTo(-8 * s, 2 * s);
+    ctx.quadraticCurveTo(0, -12 * s, 8 * s, -2 * s);
+    ctx.quadraticCurveTo(6 * s, 2 * s, 0, 4 * s);
+    ctx.quadraticCurveTo(-6 * s, 2 * s, -8 * s, 2 * s);
     ctx.fill();
-    // Tip
-    ctx.fillStyle = '#a08020';
+    // Inner curve highlight
+    ctx.fillStyle = '#FFEC6E';
     ctx.beginPath();
-    ctx.arc(BALL_SIZE * 0.65, -1, 2, 0, Math.PI * 2);
+    ctx.moveTo(-5 * s, 1 * s);
+    ctx.quadraticCurveTo(0, -8 * s, 5 * s, -1 * s);
+    ctx.quadraticCurveTo(3 * s, 1 * s, 0, 2 * s);
+    ctx.quadraticCurveTo(-3 * s, 1 * s, -5 * s, 1 * s);
     ctx.fill();
-    // Highlight
-    ctx.fillStyle = '#ffe860';
+    // Stem (brown tip at right end)
+    ctx.fillStyle = '#8B6914';
     ctx.beginPath();
-    ctx.arc(-2, -1, BALL_SIZE * 0.3, 0, Math.PI * 2);
+    ctx.moveTo(8 * s, -2 * s);
+    ctx.lineTo(10 * s, -4 * s);
+    ctx.lineTo(9 * s, -1 * s);
+    ctx.closePath();
+    ctx.fill();
+    // Bottom tip (dark end at left)
+    ctx.fillStyle = '#6B4F0A';
+    ctx.beginPath();
+    ctx.arc(-8 * s, 2 * s, 1.5 * s, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
   }

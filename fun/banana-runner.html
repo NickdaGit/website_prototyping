@@ -172,7 +172,8 @@
   // Obstacles
   var obstacles = [];
   var obstacleTimer = 0;
-  var minObstacleGap = 120;
+  var minObstacleGap = 180;
+  var lastObstacleType = '';
   // Bananas
   var bananas = [];
   var bananaTimer = 0;
@@ -350,7 +351,11 @@
   // --- Obstacle generation ---
   function spawnObstacle() {
     var types = ['crate', 'crate2', 'rock'];
+    if (lastObstacleType === 'crate2') {
+      types = ['crate', 'rock'];
+    }
     var type = types[Math.floor(Math.random() * types.length)];
+    lastObstacleType = type;
     var obs = { x: CW + 20, type: type };
 
     if (type === 'crate') {
@@ -661,6 +666,7 @@
     resetMonkey();
     initGround();
     obstacles = [];
+    lastObstacleType = '';
     bananas = [];
     obstacleTimer = 0;
     bananaTimer = 0;
@@ -820,7 +826,7 @@
     }
     // Spawn obstacles
     obstacleTimer += gameSpeed;
-    var spawnInterval = Math.max(minObstacleGap, 250 - distance * 0.15);
+    var spawnInterval = Math.max(minObstacleGap, 280 - distance * 0.1);
     if (obstacleTimer > spawnInterval && !monkey.dead) {
       // Check we're not spawning on a gap
       var canSpawn = true;

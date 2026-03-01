@@ -504,15 +504,24 @@
   function lockPiece() {
     const cells = getCells(current.type, current.rotation);
     const color = PIECES[current.type].color;
+    var aboveBoard = false;
     for (let i = 0; i < cells.length; i++) {
       const r = current.y + cells[i][0];
       const c = current.x + cells[i][1];
+      if (r < 0) {
+        aboveBoard = true;
+      }
       if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
         board[r][c] = color;
       }
     }
     isLocking = false;
     lockTimer = 0;
+
+    if (aboveBoard) {
+      state = 'gameOver';
+      return;
+    }
 
     // Check for line clears
     checkLines();
