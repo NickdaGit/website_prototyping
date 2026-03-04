@@ -1,0 +1,18 @@
+{
+  "type": "https://eips.ethereum.org/EIPS/eip-8004#registration-v1",
+  "name": "Gunther",
+  "description": "A minimal placeholder for an ERC-8004 agent. Details to be updated later.",
+  "image": "https://example.com/placeholder.png",
+  "services": [],
+  "x402Support": false,
+  "active": false,
+  "registrations": [],
+  "supportedTrust": []
+}
+
+
+
+
+
+
+
